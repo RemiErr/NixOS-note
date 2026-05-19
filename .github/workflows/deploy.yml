@@ -30,12 +30,17 @@ jobs:
           mdbook-version: 'latest'
 
       - name: 安裝 mdbook-mermaid（Mermaid 圖表支援）
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          MERMAID_VERSION=$(curl -s https://api.github.com/repos/badboy/mdbook-mermaid/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+          MERMAID_VERSION=$(curl -s \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/badboy/mdbook-mermaid/releases/latest \
+            | grep '"tag_name"' | cut -d'"' -f4)
+          echo "Installing mdbook-mermaid ${MERMAID_VERSION}"
           curl -sSL "https://github.com/badboy/mdbook-mermaid/releases/download/${MERMAID_VERSION}/mdbook-mermaid-x86_64-unknown-linux-musl.tar.gz" \
             | tar xz
           sudo mv mdbook-mermaid /usr/local/bin/
-          echo "mdbook-mermaid ${MERMAID_VERSION} 安裝完成"
 
       - name: 建構書籍
         run: mdbook build
