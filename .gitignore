@@ -1,0 +1,6 @@
+build/
+result
+.direnv/
+*.swp
+*.swo
+.DS_Store

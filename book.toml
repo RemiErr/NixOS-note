@@ -1,0 +1,17 @@
+[book]
+title = "NixOS 系統配置文件結構完全指南"
+authors = [""]
+description = "從入門到企業級架構的實戰教學"
+language = "zh-TW"
+src = "src"
+
+[build]
+build-dir = "build/html"
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html]
+default-theme = "rust"
+preferred-dark-theme = "ayu"
+smart-punctuation = false
