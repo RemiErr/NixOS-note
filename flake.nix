@@ -39,6 +39,8 @@
           buildPhase = ''
             # 產生 mermaid.min.js 與 mermaid-init.js，否則瀏覽器無法渲染圖
             mdbook-mermaid install .
+            # 用自訂版本覆蓋預設 init（指定 dagre layout）
+            cp assets/mermaid-init.js mermaid-init.js
             mdbook build
           '';
 
