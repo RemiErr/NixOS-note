@@ -1,6 +1,68 @@
+# ── mdBook 建構輸出 ──────────────────────────────
 build/
+book/
+
+# ── Nix ──────────────────────────────────────────
 result
+result-*
 .direnv/
+.envrc.local
+
+# ── mdbook-mermaid 瀏覽器端資源 ──────────────────
+# 由 `mdbook-mermaid install .` 產生（CI 與 make 會自動執行）
+mermaid.min.js
+mermaid-init.js
+
+# ── 編輯器 / IDE ─────────────────────────────────
+.vscode/
+.idea/
 *.swp
 *.swo
+*.swn
+.*.sw[a-z]
+*~
+
+# ── 作業系統雜訊 ─────────────────────────────────
 .DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ── 臨時、備份、合併衝突殘留 ─────────────────────
+*.bak
+*.tmp
+*.orig
+*.rej
+*.log
+
+# ── 機敏資料（Lab 範例會引導讀者產生，但不應該提交） ──
+*.key
+*.pem
+id_rsa*
+id_ed25519*
+.env
+.env.local
+.env.*.local
+secrets/
+*.kdbx
+
+# ── Node（若手動安裝 markdownlint-cli 而非走 Nix devShell） ──
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Python（若有腳本暫存） ───────────────────────
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# ── pandoc / PDF 中介檔（scripts/build-book.sh 可能產生） ──
+*.aux
+*.toc
+*.out
