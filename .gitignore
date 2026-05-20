@@ -9,9 +9,10 @@ result-*
 .envrc.local
 
 # ── mdbook-mermaid 瀏覽器端資源 ──────────────────
-# 由 `mdbook-mermaid install .` 產生（CI 與 make 會自動執行）
-mermaid.min.js
-mermaid-init.js
+# 由 `mdbook-mermaid install .` 在書籍根目錄產生（CI 與 make 會自動執行）。
+# 自訂 init 來源在 assets/mermaid-init.js，不在此忽略範圍。
+/mermaid.min.js
+/mermaid-init.js
 
 # ── 編輯器 / IDE ─────────────────────────────────
 .vscode/
