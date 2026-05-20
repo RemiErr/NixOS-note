@@ -42,13 +42,15 @@ jobs:
             | tar xz
           sudo mv mdbook-mermaid /usr/local/bin/
 
-      - name: 產生 mermaid.min.js 與 mermaid-init.js（套用自訂 dagre layout）
-        # mdbook-mermaid install 會把瀏覽器端的 mermaid.js 與
-        # 預設初始化腳本寫到 book root。隨後我們用 assets/mermaid-init.js
-        # 覆蓋預設 init，套用 dagre layout 與其他自訂設定。
+      - name: 產生 Mermaid 瀏覽器資源（含自訂 dagre layout 與縮放 modal）
+        # mdbook-mermaid install 產生 mermaid.min.js + 預設 mermaid-init.js，
+        # 隨後我們把 assets/ 內的自訂版本（mermaid-init.js / mermaid-zoom.js
+        # / mermaid-zoom.css）複製到根目錄覆蓋或補上。
         run: |
           mdbook-mermaid install .
           cp assets/mermaid-init.js mermaid-init.js
+          cp assets/mermaid-zoom.js mermaid-zoom.js
+          cp assets/mermaid-zoom.css mermaid-zoom.css
 
       - name: 建構書籍
         run: mdbook build

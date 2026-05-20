@@ -37,10 +37,13 @@
           ];
 
           buildPhase = ''
-            # 產生 mermaid.min.js 與 mermaid-init.js，否則瀏覽器無法渲染圖
+            # 產生 mermaid.min.js 與 mermaid-init.js
             mdbook-mermaid install .
             # 用自訂版本覆蓋預設 init（指定 dagre layout）
             cp assets/mermaid-init.js mermaid-init.js
+            # 點擊縮放 modal
+            cp assets/mermaid-zoom.js mermaid-zoom.js
+            cp assets/mermaid-zoom.css mermaid-zoom.css
             mdbook build
           '';
 

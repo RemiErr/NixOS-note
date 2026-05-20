@@ -1,0 +1,115 @@
+/* Mermaid zoom modal */
+
+/* 頁面內的 Mermaid SVG：標示可點擊 */
+pre.mermaid svg.mz-clickable,
+div.mermaid svg.mz-clickable,
+.mermaid > svg.mz-clickable {
+  cursor: zoom-in;
+  transition: filter 0.15s ease-out;
+}
+pre.mermaid svg.mz-clickable:hover,
+div.mermaid svg.mz-clickable:hover,
+.mermaid > svg.mz-clickable:hover {
+  filter: brightness(0.97);
+}
+
+/* Modal 容器 */
+#mermaid-zoom-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+#mermaid-zoom-modal.mz-open {
+  display: block;
+}
+
+#mermaid-zoom-modal .mz-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+}
+
+#mermaid-zoom-modal .mz-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+#mermaid-zoom-modal .mz-stage.mz-grabbing {
+  cursor: grabbing;
+}
+
+#mermaid-zoom-modal .mz-content {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#mermaid-zoom-modal .mz-content svg {
+  max-width: none !important;
+  max-height: none !important;
+  width: auto !important;
+  height: 85vh;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+  background: white;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+/* 控制列 */
+#mermaid-zoom-modal .mz-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+#mermaid-zoom-modal .mz-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #222;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s, transform 0.05s;
+}
+#mermaid-zoom-modal .mz-btn:hover {
+  background: white;
+}
+#mermaid-zoom-modal .mz-btn:active {
+  transform: scale(0.95);
+}
+
+/* 提示列 */
+#mermaid-zoom-modal .mz-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+/* 深色主題下，modal 內的 SVG 維持白底（圖原本就用淺色設計） */
+.navy #mermaid-zoom-modal .mz-content svg,
+.coal #mermaid-zoom-modal .mz-content svg,
+.ayu  #mermaid-zoom-modal .mz-content svg {
+  background: #fafafa;
+}
