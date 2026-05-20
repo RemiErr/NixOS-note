@@ -9,10 +9,13 @@ result-*
 .envrc.local
 
 # ── mdbook-mermaid 瀏覽器端資源 ──────────────────
-# 由 `mdbook-mermaid install .` 在書籍根目錄產生（CI 與 make 會自動執行）。
-# 自訂 init 來源在 assets/mermaid-init.js，不在此忽略範圍。
+# 由 `mdbook-mermaid install .` 與 build target 從 assets/ 複製到根目錄。
+# 來源在 assets/mermaid-init.js / mermaid-zoom.js / mermaid-zoom.css，
+# 根目錄的副本是建構產物，不入庫。
 /mermaid.min.js
 /mermaid-init.js
+/mermaid-zoom.js
+/mermaid-zoom.css
 
 # ── 編輯器 / IDE ─────────────────────────────────
 .vscode/
