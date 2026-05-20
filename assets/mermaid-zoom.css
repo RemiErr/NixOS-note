@@ -1,16 +1,21 @@
 /* Mermaid zoom modal */
 
-/* 頁面內的 Mermaid SVG：標示可點擊 */
-pre.mermaid svg.mz-clickable,
-div.mermaid svg.mz-clickable,
-.mermaid > svg.mz-clickable {
+/* 頁面內的 Mermaid 容器：標示可點擊 */
+pre.mermaid,
+div.mermaid {
   cursor: zoom-in;
   transition: filter 0.15s ease-out;
 }
-pre.mermaid svg.mz-clickable:hover,
-div.mermaid svg.mz-clickable:hover,
-.mermaid > svg.mz-clickable:hover {
+pre.mermaid:hover,
+div.mermaid:hover {
   filter: brightness(0.97);
+}
+
+/* SVG 也繼承可點擊游標 */
+pre.mermaid svg,
+div.mermaid svg,
+.mermaid > svg {
+  cursor: zoom-in;
 }
 
 /* Modal 容器 */
@@ -58,6 +63,7 @@ div.mermaid svg.mz-clickable:hover,
   background: white;
   border-radius: 4px;
   padding: 16px;
+  display: block;
 }
 
 /* 控制列 */
@@ -107,7 +113,7 @@ div.mermaid svg.mz-clickable:hover,
   pointer-events: none;
 }
 
-/* 深色主題下，modal 內的 SVG 維持白底（圖原本就用淺色設計） */
+/* 深色主題下，modal 內的 SVG 維持淺色底（圖原本以淺底設計） */
 .navy #mermaid-zoom-modal .mz-content svg,
 .coal #mermaid-zoom-modal .mz-content svg,
 .ayu  #mermaid-zoom-modal .mz-content svg {
