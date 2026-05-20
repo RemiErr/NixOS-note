@@ -42,9 +42,9 @@ NixOS 有三個不同的套件安裝層次，各自有不同的用途與生命�
 
 ```mermaid
 graph TD
-    A["套件安裝三個層次"] --> B["系統套件\nenvironment.systemPackages"]
-    A --> C["使用者套件\nusers.users.alice.packages"]
-    A --> D["臨時套件\nnix shell / nix-shell -p"]
+    A["套件安裝三個層次"] --> B["系統套件<br/>environment.systemPackages"]
+    A --> C["使用者套件<br/>users.users.alice.packages"]
+    A --> D["臨時套件<br/>nix shell / nix-shell -p"]
 
     B --> B1["所有使用者可用"]
     B --> B2["寫入 configuration.nix"]

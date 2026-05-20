@@ -198,10 +198,10 @@ flowchart TD
     B -->|快速預覽下載清單| C[dry-run]
     B -->|詳細模擬啟動步驟| D[dry-activate]
     B -->|否，要真正部署| E{改動涉及<br>kernel / initrd？}
-    E -->|是| F[boot\n下次開機生效]
+    E -->|是| F[boot<br/>下次開機生效]
     E -->|否| G{是生產環境<br>或想先測試？}
-    G -->|想先測試，可接受重開機回滾| H[test\n測試後確認再 switch]
-    G -->|確定要部署| I[switch\n立即生效並設為預設]
+    G -->|想先測試，可接受重開機回滾| H[test<br/>測試後確認再 switch]
+    G -->|確定要部署| I[switch<br/>立即生效並設為預設]
     H --> J{測試結果滿意？}
     J -->|是| I
     J -->|否，重開機回滾| K[系統回到舊狀態]
@@ -674,14 +674,14 @@ magicRollback = true;
 
 ```mermaid
 flowchart LR
-    A[本地: nix build\n建置 closure] --> B[本地: nix copy\n複製 closure 到伺服器]
-    B --> C[伺服器: activate\n執行 switch]
-    C --> D[伺服器: 啟動 watchdog\n開始等待確認]
-    D --> E{本地收到\n啟動成功訊號？}
-    E -->|是| F[本地: 送出 confirm\n確認部署成功]
-    F --> G[伺服器: watchdog 停止\n新配置保留]
-    E -->|否（逾時或網路斷）| H[伺服器: watchdog 觸發\n自動 rollback]
-    H --> I[伺服器: 回到舊配置\nSSH 恢復正常]
+    A[本地: nix build<br/>建置 closure] --> B[本地: nix copy<br/>複製 closure 到伺服器]
+    B --> C[伺服器: activate<br/>執行 switch]
+    C --> D[伺服器: 啟動 watchdog<br/>開始等待確認]
+    D --> E{本地收到<br/>啟動成功訊號？}
+    E -->|是| F[本地: 送出 confirm<br/>確認部署成功]
+    F --> G[伺服器: watchdog 停止<br/>新配置保留]
+    E -->|"否（逾時或網路斷）"| H["伺服器: watchdog 觸發<br/>自動 rollback"]
+    H --> I[伺服器: 回到舊配置<br/>SSH 恢復正常]
     style G fill:#d4edda
     style I fill:#fff3cd
 ```
@@ -908,7 +908,7 @@ colmena eval -E '{ nodes, pkgs, ... }: nodes.server.config.networking.hostName'
 
 ```mermaid
 flowchart TD
-    A[colmena apply --on @webserver] --> B[評估 hive\n找出所有 webserver tag 的主機]
+    A[colmena apply --on @webserver] --> B[評估 hive<br/>找出所有 webserver tag 的主機]
     B --> C{並行處理}
     C --> D1[建置 server 的 closure]
     C --> D2[建置 web-02 的 closure]
@@ -1212,15 +1212,15 @@ GitOps 是指：
 
 ```mermaid
 flowchart TD
-    A[工程師修改配置\n在本地 branch] --> B[git push\n開 Pull Request]
+    A[工程師修改配置<br/>在本地 branch] --> B[git push<br/>開 Pull Request]
     B --> C[CI 自動執行]
-    C --> D1[nix flake check\n語法與模組測試]
-    C --> D2[nix build\n建置各主機 closure]
+    C --> D1[nix flake check<br/>語法與模組測試]
+    C --> D2[nix build<br/>建置各主機 closure]
     D1 --> E{CI 全部通過？}
     D2 --> E
-    E -->|否| F[工程師修復問題\n重新 push]
+    E -->|否| F[工程師修復問題<br/>重新 push]
     F --> C
-    E -->|是| G[PR Code Review\n至少一位同事審查]
+    E -->|是| G[PR Code Review<br/>至少一位同事審查]
     G --> H{Review 通過？}
     H -->|否| I[修改後重新 review]
     I --> G
@@ -1228,12 +1228,12 @@ flowchart TD
     J --> K[自動部署到 staging 環境]
     K --> L[自動化整合測試]
     L --> M{測試通過？}
-    M -->|否| N[發送通知\n自動 rollback staging]
-    M -->|是| O[手動核准\n部署到 production]
-    O --> P[deploy-rs 或 colmena\n部署到 production]
+    M -->|否| N[發送通知<br/>自動 rollback staging]
+    M -->|是| O[手動核准<br/>部署到 production]
+    O --> P[deploy-rs 或 colmena<br/>部署到 production]
     P --> Q{部署成功？}
-    Q -->|否（magicRollback）| R[自動 rollback production\n通知工程師]
-    Q -->|是| S[部署完成\n監控正常]
+    Q -->|"否（magicRollback）"| R["自動 rollback production<br/>通知工程師"]
+    Q -->|是| S[部署完成<br/>監控正常]
     style S fill:#d4edda
     style R fill:#f8d7da
     style N fill:#fff3cd
@@ -1402,11 +1402,11 @@ production 環境應該更嚴格：
 ```mermaid
 flowchart LR
     A[發現生產問題] --> B{可以等 review？}
-    B -->|否，緊急| C[建立 hotfix branch\n直接修改配置]
-    C --> D[本地快速驗證\nnix build + dry-activate]
-    D --> E[直接部署到 production\ndeploy .#production]
-    E --> F[事後開 PR\n補充說明和文件]
-    F --> G[正式 review\n合併到 main]
+    B -->|否，緊急| C[建立 hotfix branch<br/>直接修改配置]
+    C --> D[本地快速驗證<br/>nix build + dry-activate]
+    D --> E[直接部署到 production<br/>deploy .#production]
+    E --> F[事後開 PR<br/>補充說明和文件]
+    F --> G[正式 review<br/>合併到 main]
     B -->|可以| H[走正常 PR 流程]
     style E fill:#fff3cd
     style G fill:#d4edda

@@ -116,11 +116,11 @@ flowchart LR
         A1[現在的系統] -->|執行指令 1| B1[中間狀態]
         B1 -->|執行指令 2| C1[又一個中間狀態]
         C1 -->|執行指令 3| D1[目標狀態？]
-        D1 -->|不知道以後\n又會執行什麼| E1[未知狀態]
+        D1 -->|不知道以後<br/>又會執行什麼| E1[未知狀態]
     end
 
     subgraph 宣告式["宣告式系統管理（NixOS）"]
-        A2[configuration.nix\n描述目標狀態] -->|nixos-rebuild switch| B2[系統精確符合描述]
+        A2[configuration.nix<br/>描述目標狀態] -->|nixos-rebuild switch| B2[系統精確符合描述]
         B2 -->|修改 configuration.nix| C2[新的目標描述]
         C2 -->|nixos-rebuild switch| D2[系統精確符合新描述]
     end
@@ -183,16 +183,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[讀取 configuration.nix] --> B[評估 Nix 表達式\n計算系統的完整定義]
-    B --> C[計算所有依賴項\n產生 derivation]
-    C --> D{哪些套件已在\n/nix/store 中？}
+    A[讀取 configuration.nix] --> B[評估 Nix 表達式<br/>計算系統的完整定義]
+    B --> C[計算所有依賴項<br/>產生 derivation]
+    C --> D{哪些套件已在<br/>/nix/store 中？}
     D -->|已存在| E[直接重用，不重新下載]
-    D -->|不存在| F[從 binary cache 下載\n或在本機建置]
+    D -->|不存在| F[從 binary cache 下載<br/>或在本機建置]
     E --> G[組裝新的 system closure]
     F --> G
     G --> H[建立新的 Generation]
     H --> I[原子化切換到新 Generation]
-    I --> J[系統狀態精確符合\nconfiguration.nix 描述]
+    I --> J[系統狀態精確符合<br/>configuration.nix 描述]
 ```
 
 整個過程是**原子化（atomic）**的：
@@ -238,10 +238,10 @@ ls /nix/store | head -10
 
 ```mermaid
 graph TD
-    A["vim 原始碼\nHash: abc123"] --> H[計算 Hash]
-    B["ncurses 依賴\n路徑: /nix/store/xyz789-ncurses-..."] --> H
-    C["glibc 依賴\n路徑: /nix/store/def456-glibc-..."] --> H
-    D["編譯選項\n--enable-gui=no"] --> H
+    A["vim 原始碼<br/>Hash: abc123"] --> H[計算 Hash]
+    B["ncurses 依賴<br/>路徑: /nix/store/xyz789-ncurses-..."] --> H
+    C["glibc 依賴<br/>路徑: /nix/store/def456-glibc-..."] --> H
+    D["編譯選項<br/>--enable-gui=no"] --> H
     H --> I["/nix/store/0a1b2c...-vim-9.1.0"]
 ```
 
@@ -258,7 +258,7 @@ graph LR
 
     style B fill:#f9c,stroke:#333
     style D fill:#9cf,stroke:#333
-    note1["← 不同 Hash 代表\n不同輸入條件下\n建置出的同版本套件"]
+    note1["← 不同 Hash 代表<br/>不同輸入條件下<br/>建置出的同版本套件"]
 ```
 
 **重點：** `/nix/store` 中的所有路徑都是**唯讀的（read-only）**。
@@ -334,15 +334,15 @@ Nix 稱這個特性為**純函式計算（Pure Evaluation）**。
 ```mermaid
 graph LR
     subgraph 傳統方式["傳統方式（不可重現）"]
-        A1[相同 Dockerfile] --> B1{外部環境：\n今天的 apt 版本\n今天的 PyPI 版本}
+        A1[相同 Dockerfile] --> B1{外部環境：<br/>今天的 apt 版本<br/>今天的 PyPI 版本}
         B1 --> C1[結果 A]
-        B1 --> D1[結果 B（下個月）]
+        B1 --> D1["結果 B（下個月）"]
     end
 
     subgraph nix方式["Nix 方式（可重現）"]
-        A2[相同 Nix 表達式\n+ 相同 flake.lock] --> B2[確定性計算]
+        A2[相同 Nix 表達式<br/>+ 相同 flake.lock] --> B2[確定性計算]
         B2 --> C2[結果 X]
-        B2 --> D2[結果 X（下個月也一樣）]
+        B2 --> D2["結果 X（下個月也一樣）"]
     end
 ```
 
@@ -452,12 +452,12 @@ NixOS - Generation 45 (2025-10-15)
 stateDiagram-v2
     [*] --> G45: 初次安裝
 
-    G45 --> G46: nixos-rebuild switch\n（新增 nginx）
-    G46 --> G47: nixos-rebuild switch\n（升級套件）
-    G47 --> G48: nixos-rebuild switch\n（新增服務）
+    G45 --> G46: nixos-rebuild switch<br/>（新增 nginx）
+    G46 --> G47: nixos-rebuild switch<br/>（升級套件）
+    G47 --> G48: nixos-rebuild switch<br/>（新增服務）
 
-    G48 --> G47: nixos-rebuild switch --rollback\n（發現問題，回滾）
-    G47 --> G48: nixos-rebuild switch\n（修復後重新套用）
+    G48 --> G47: nixos-rebuild switch --rollback<br/>（發現問題，回滾）
+    G47 --> G48: nixos-rebuild switch<br/>（修復後重新套用）
 
     note right of G47
         回滾後系統精確還原
@@ -522,11 +522,11 @@ graph LR
     end
 
     subgraph nixos["NixOS 學習曲線"]
-        N1[初學] --> N2["建立宣告式思維\n（本書第1-3章，最陡）"]
-        N2 --> N3["理解 Nix 語言基礎\n（第2章）"]
-        N3 --> N4["熟悉模組系統\n（第4-7章）"]
-        N4 --> N5["開始享受\n配置即文件的好處"]
-        N5 --> N6["複雜架構也能\n清晰維護"]
+        N1[初學] --> N2["建立宣告式思維<br/>（本書第1-3章，最陡）"]
+        N2 --> N3["理解 Nix 語言基礎<br/>（第2章）"]
+        N3 --> N4["熟悉模組系統<br/>（第4-7章）"]
+        N4 --> N5["開始享受<br/>配置即文件的好處"]
+        N5 --> N6["複雜架構也能<br/>清晰維護"]
     end
 ```
 

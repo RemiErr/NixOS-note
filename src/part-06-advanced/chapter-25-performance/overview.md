@@ -62,11 +62,11 @@ nixpkgs 中幾乎所有套件，官方 CI 系統（Hydra）都已預先建置並
 
 ```mermaid
 flowchart TD
-    A([開始建置]) --> B{計算 derivation\n的 store path}
-    B --> C{本地 /nix/store\n已存在？}
+    A([開始建置]) --> B{計算 derivation<br/>的 store path}
+    B --> C{本地 /nix/store<br/>已存在？}
     C -- 是 --> G([直接使用，跳過])
-    C -- 否 --> D{查詢 substituters\n例如 cache.nixos.org}
-    D -- cache 命中 --> E([驗證 narHash\n下載預建二進位])
+    C -- 否 --> D{查詢 substituters<br/>例如 cache.nixos.org}
+    D -- cache 命中 --> E([驗證 narHash<br/>下載預建二進位])
     E --> F([解壓到 /nix/store])
     F --> G
     D -- cache 未命中 --> H([本地從原始碼建置])
@@ -589,7 +589,7 @@ graph TD
     P1 --> D2
     P2 --> D4["python3"]
 
-    UNREACHABLE["未被任何 GC Root 引用\n的 store path"] -.->|GC 可刪除| TRASH["可回收"]
+    UNREACHABLE["未被任何 GC Root 引用<br/>的 store path"] -.->|GC 可刪除| TRASH["可回收"]
 
     style UNREACHABLE fill:#ffcccc
     style TRASH fill:#ffaaaa

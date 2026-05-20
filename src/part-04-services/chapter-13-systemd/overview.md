@@ -93,12 +93,12 @@ ExecStart=/nix/store/def456-nginx-1.26/bin/nginx -c /nix/store/ghi789-nginx-conf
 
 ```mermaid
 flowchart TD
-    A["configuration.nix\n（你的宣告式配置）"] --> B["Nix Evaluation\n（nix 語言評估器）"]
-    B --> C["Derivations\n（建構描述）"]
-    C --> D["Build\n（nixos-rebuild switch）"]
-    D --> E["/nix/store/...-system/\n（不可變系統閉包）"]
-    E --> F["/run/current-system\n（符號連結到當前世代）"]
-    F --> G["systemd 讀取 unit 檔案\n並管理服務生命週期"]
+    A["configuration.nix<br/>（你的宣告式配置）"] --> B["Nix Evaluation<br/>（nix 語言評估器）"]
+    B --> C["Derivations<br/>（建構描述）"]
+    C --> D["Build<br/>（nixos-rebuild switch）"]
+    D --> E["/nix/store/...-system/<br/>（不可變系統閉包）"]
+    E --> F["/run/current-system<br/>（符號連結到當前世代）"]
+    F --> G["systemd 讀取 unit 檔案<br/>並管理服務生命週期"]
 
     style A fill:#2d5a27,color:#fff
     style G fill:#1a3a6b,color:#fff

@@ -693,8 +693,8 @@ Nginx（高效能 Web 伺服器與反向代理）在 NixOS 中最常見的兩種
 ```mermaid
 graph LR
     Internet -->|HTTPS 443| Nginx
-    Nginx -->|HTTP 3000| App["應用程式\n(localhost:3000)"]
-    Nginx -->|HTTP 5000| App2["另一個應用\n(localhost:5000)"]
+    Nginx -->|HTTP 3000| App["應用程式<br/>(localhost:3000)"]
+    Nginx -->|HTTP 5000| App2["另一個應用<br/>(localhost:5000)"]
 ```
 
 ---
@@ -1041,10 +1041,10 @@ Tailscale 是基於 WireGuard（高效能 VPN 協定）的零配置 VPN 服務�
 ```mermaid
 graph TB
     subgraph Tailscale_Network["Tailscale 網路（100.x.x.x）"]
-        Office["辦公室工作站\n100.64.0.1"]
-        Home["家用電腦\n100.64.0.2"]
-        Server["雲端伺服器\n100.64.0.3"]
-        NAS["家用 NAS\n100.64.0.4"]
+        Office["辦公室工作站<br/>100.64.0.1"]
+        Home["家用電腦<br/>100.64.0.2"]
+        Server["雲端伺服器<br/>100.64.0.3"]
+        NAS["家用 NAS<br/>100.64.0.4"]
     end
 
     Office <-->|直接 WireGuard 加密通道| Home
@@ -1052,7 +1052,7 @@ graph TB
     Home <-->|直接 WireGuard 加密通道| NAS
     Server <-->|直接 WireGuard 加密通道| NAS
 
-    Coord["Tailscale 協調伺服器\n(僅交換金鑰，不轉發流量)"]
+    Coord["Tailscale 協調伺服器<br/>(僅交換金鑰，不轉發流量)"]
     Coord -.->|設備發現與金鑰交換| Office
     Coord -.->|設備發現與金鑰交換| Home
     Coord -.->|設備發現與金鑰交換| Server
@@ -1198,21 +1198,21 @@ Samba 是 SMB/CIFS（Server Message Block / Common Internet File System）協定
 graph TB
     subgraph NixOS_Host["NixOS 主機（nixos）"]
         subgraph Services["同時提供的服務"]
-            SSH["OpenSSH\n:2222"]
-            Nginx_S["Nginx\n:80/:443"]
-            PG["PostgreSQL\n:5432（本機）"]
-            Redis_S["Redis\n:6379（本機）"]
-            Samba_S["Samba\n:445"]
-            Tailscale_S["Tailscale\ntailscale0"]
+            SSH["OpenSSH<br/>:2222"]
+            Nginx_S["Nginx<br/>:80/:443"]
+            PG["PostgreSQL<br/>:5432（本機）"]
+            Redis_S["Redis<br/>:6379（本機）"]
+            Samba_S["Samba<br/>:445"]
+            Tailscale_S["Tailscale<br/>tailscale0"]
         end
     end
 
-    Linux_Client["Linux 管理員\n(SSH 連線)"] -->|TCP 2222| SSH
+    Linux_Client["Linux 管理員<br/>(SSH 連線)"] -->|TCP 2222| SSH
     Browser["瀏覽器 / 外部用戶"] -->|TCP 80/443| Nginx_S
     Win_Client["Windows 用戶端"] -->|TCP 445| Samba_S
-    App["Web 應用程式\n(localhost)"] -->|Unix Socket| PG
+    App["Web 應用程式<br/>(localhost)"] -->|Unix Socket| PG
     App -->|TCP 6379| Redis_S
-    Remote["遠端設備\n(透過 Tailscale)"] -->|VPN| Tailscale_S
+    Remote["遠端設備<br/>(透過 Tailscale)"] -->|VPN| Tailscale_S
 ```
 
 ---

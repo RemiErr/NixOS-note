@@ -64,14 +64,14 @@ NixOS 不只是伺服器作業系統。
 ```mermaid
 graph TB
     subgraph "X11 架構（傳統）"
-        App1["應用程式 A"] --> XServer["X Server\n（X.Org）"]
+        App1["應用程式 A"] --> XServer["X Server<br/>（X.Org）"]
         App2["應用程式 B"] --> XServer
-        XServer --> Compositor1["Compositor\n（Compiz/KWin/Mutter）"]
+        XServer --> Compositor1["Compositor<br/>（Compiz/KWin/Mutter）"]
         Compositor1 --> GPU1["GPU 驅動"]
     end
 
     subgraph "Wayland 架構（現代）"
-        App3["應用程式 A"] --> Compositor2["Compositor\n（KWin/Mutter/Sway/Hyprland）"]
+        App3["應用程式 A"] --> Compositor2["Compositor<br/>（KWin/Mutter/Sway/Hyprland）"]
         App4["應用程式 B"] --> Compositor2
         Compositor2 --> GPU2["GPU 驅動"]
     end
@@ -793,9 +793,9 @@ animations {
 ```mermaid
 sequenceDiagram
     participant Boot as 開機程序
-    participant DM as Display Manager\n（SDDM / GDM）
+    participant DM as Display Manager<br/>（SDDM / GDM）
     participant Auth as PAM 驗證
-    participant Session as 桌面 Session\n（GNOME / KDE / Hyprland）
+    participant Session as 桌面 Session<br/>（GNOME / KDE / Hyprland）
 
     Boot->>DM: 系統啟動完成，啟動 DM
     DM->>DM: 顯示登入畫面
@@ -1135,22 +1135,22 @@ PipeWire 的優勢：
 ```mermaid
 graph TB
     subgraph "應用程式層"
-        App1["一般應用\n（Spotify、VLC）"]
-        App2["PulseAudio 應用\n（pavucontrol）"]
-        App3["JACK 應用\n（Ardour、DAW）"]
-        App4["螢幕錄影\n（OBS via Portal）"]
+        App1["一般應用<br/>（Spotify、VLC）"]
+        App2["PulseAudio 應用<br/>（pavucontrol）"]
+        App3["JACK 應用<br/>（Ardour、DAW）"]
+        App4["螢幕錄影<br/>（OBS via Portal）"]
     end
 
     subgraph "PipeWire 層"
-        PW["PipeWire\n（核心）"]
-        Pulse["PulseAudio\n相容層"]
-        JACK["JACK\n相容層"]
-        Portal["XDG Portal\n（螢幕截取）"]
+        PW["PipeWire<br/>（核心）"]
+        Pulse["PulseAudio<br/>相容層"]
+        JACK["JACK<br/>相容層"]
+        Portal["XDG Portal<br/>（螢幕截取）"]
     end
 
     subgraph "硬體層"
-        ALSA["ALSA\n（核心驅動）"]
-        BT["藍牙\n（BlueZ）"]
+        ALSA["ALSA<br/>（核心驅動）"]
+        BT["藍牙<br/>（BlueZ）"]
     end
 
     App1 --> PW
@@ -1493,17 +1493,17 @@ Qt 是 KDE 使用的 UI 框架，但 Qt 應用程式在 GNOME 環境中常看起
 ```mermaid
 graph TB
     subgraph "系統層（configuration.nix）"
-        S1["fonts.packages\n安裝字型套件"]
-        S2["fonts.fontconfig\n全域字型優先順序"]
-        S3["qt.platformTheme\nQt 主題引擎"]
-        S4["environment.systemPackages\n安裝主題套件"]
+        S1["fonts.packages<br/>安裝字型套件"]
+        S2["fonts.fontconfig<br/>全域字型優先順序"]
+        S3["qt.platformTheme<br/>Qt 主題引擎"]
+        S4["environment.systemPackages<br/>安裝主題套件"]
     end
 
     subgraph "使用者層（Home Manager）"
-        H1["gtk.theme\nGTK 主題選擇"]
-        H2["gtk.iconTheme\n圖示主題"]
-        H3["home.pointerCursor\n游標主題"]
-        H4["dconf.settings\nGNOME 設定值"]
+        H1["gtk.theme<br/>GTK 主題選擇"]
+        H2["gtk.iconTheme<br/>圖示主題"]
+        H3["home.pointerCursor<br/>游標主題"]
+        H4["dconf.settings<br/>GNOME 設定值"]
     end
 
     S1 -->|"提供字型給"| H1
@@ -1862,10 +1862,10 @@ graph TD
     Start --> Hyprland["Hyprland（進階）"]
     Start --> Other["其他（XFCE 等）"]
 
-    GNOME --> GnomeConf["services.displayManager.gdm.enable = true\nservices.desktopManager.gnome.enable = true"]
-    KDE --> KdeConf["services.displayManager.sddm.enable = true\nservices.desktopManager.plasma6.enable = true"]
-    Hyprland --> HyprlandConf["programs.hyprland.enable = true\n+ 手動安裝 waybar / wofi / dunst"]
-    Other --> OtherConf["services.xserver.enable = true\n+ 對應的 desktopManager 設定"]
+    GNOME --> GnomeConf["services.displayManager.gdm.enable = true<br/>services.desktopManager.gnome.enable = true"]
+    KDE --> KdeConf["services.displayManager.sddm.enable = true<br/>services.desktopManager.plasma6.enable = true"]
+    Hyprland --> HyprlandConf["programs.hyprland.enable = true<br/>+ 手動安裝 waybar / wofi / dunst"]
+    Other --> OtherConf["services.xserver.enable = true<br/>+ 對應的 desktopManager 設定"]
 
     style GnomeConf fill:#c0e8f9
     style KdeConf fill:#c0e8f9

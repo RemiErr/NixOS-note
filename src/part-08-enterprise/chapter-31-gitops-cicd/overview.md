@@ -108,15 +108,15 @@ NixOS 從設計之初就內建了這些能力。
 
 ```mermaid
 flowchart LR
-    Dev["👨‍💻 開發者\n修改配置"] --> PR["Pull Request\n提交審查"]
-    PR --> CI["CI 驗證\nnix flake check\ndry-run"]
-    CI -->|驗證通過| Review["Code Review\n同事審查"]
+    Dev["👨‍💻 開發者<br/>修改配置"] --> PR["Pull Request<br/>提交審查"]
+    PR --> CI["CI 驗證<br/>nix flake check<br/>dry-run"]
+    CI -->|驗證通過| Review["Code Review<br/>同事審查"]
     CI -->|驗證失敗| Dev
     Review -->|批准| Merge["Merge to main"]
-    Merge --> CD["CD 自動部署\nnixos-rebuild switch"]
-    CD --> System["🖥️ 目標主機\n系統更新"]
-    System -->|部署成功| Monitor["監控系統\n確認健康"]
-    System -->|部署失敗| Alert["告警通知\n自動 rollback"]
+    Merge --> CD["CD 自動部署<br/>nixos-rebuild switch"]
+    CD --> System["🖥️ 目標主機<br/>系統更新"]
+    System -->|部署成功| Monitor["監控系統<br/>確認健康"]
+    System -->|部署失敗| Alert["告警通知<br/>自動 rollback"]
 ```
 
 ### GitOps 與傳統 IT 部署的根本差異
@@ -329,10 +329,10 @@ nix flake check --show-trace
 ```mermaid
 flowchart TD
     A["開發者建立 PR"] --> B["GitHub Actions 觸發"]
-    B --> C["nix flake check --no-build\n快速語法檢查"]
-    C -->|通過| D["nix build toplevel\n實際建置主機配置"]
-    C -->|失敗| E["❌ PR 標記為失敗\n通知開發者修正"]
-    D -->|通過| F["✅ CI 通過\n等待 code review"]
+    B --> C["nix flake check --no-build<br/>快速語法檢查"]
+    C -->|通過| D["nix build toplevel<br/>實際建置主機配置"]
+    C -->|失敗| E["❌ PR 標記為失敗<br/>通知開發者修正"]
+    D -->|通過| F["✅ CI 通過<br/>等待 code review"]
     D -->|失敗| E
     F --> G["同事 review 並批准"]
     G --> H["Merge to main"]
@@ -859,27 +859,27 @@ jobs:
 
 ```mermaid
 flowchart TD
-    A["👨‍💻 開發者\n修改配置"] --> B["git push\n建立 PR"]
-    B --> C{"CI Pipeline\n觸發"}
+    A["👨‍💻 開發者<br/>修改配置"] --> B["git push<br/>建立 PR"]
+    B --> C{"CI Pipeline<br/>觸發"}
 
-    C --> D["nix flake check\n語法驗證"]
-    D -->|失敗| E["❌ 通知開發者\n修正問題"]
-    D -->|通過| F["nix build toplevel\n建置驗證（所有主機）"]
+    C --> D["nix flake check<br/>語法驗證"]
+    D -->|失敗| E["❌ 通知開發者<br/>修正問題"]
+    D -->|通過| F["nix build toplevel<br/>建置驗證（所有主機）"]
 
     F -->|任何主機失敗| E
-    F -->|所有主機通過| G["✅ CI 通過\n推送到 Cachix"]
+    F -->|所有主機通過| G["✅ CI 通過<br/>推送到 Cachix"]
 
-    G --> H["Code Review\n等待批准"]
-    H -->|拒絕| I["開發者修正\n並重新提交"]
+    G --> H["Code Review<br/>等待批准"]
+    H -->|拒絕| I["開發者修正<br/>並重新提交"]
     I --> B
     H -->|批准| J["Merge to main"]
 
-    J --> K["CD Pipeline\n自動觸發"]
-    K --> L["nix build\n在本機建置"]
-    L --> M["nixos-rebuild switch\n部署到目標主機"]
+    J --> K["CD Pipeline<br/>自動觸發"]
+    K --> L["nix build<br/>在本機建置"]
+    L --> M["nixos-rebuild switch<br/>部署到目標主機"]
 
-    M -->|成功| N["✅ 部署完成\n發送通知"]
-    M -->|失敗| O["❌ 部署失敗\n自動 rollback\n發送告警"]
+    M -->|成功| N["✅ 部署完成<br/>發送通知"]
+    M -->|失敗| O["❌ 部署失敗<br/>自動 rollback<br/>發送告警"]
 ```
 
 ---
@@ -969,8 +969,8 @@ Hydra 的核心優勢：
 
 ```mermaid
 flowchart LR
-    Dev["feature/* branch\n開發環境"] --> Staging["develop branch\nStaging 環境"]
-    Staging --> Prod["main branch\nProduction 環境"]
+    Dev["feature/* branch<br/>開發環境"] --> Staging["develop branch<br/>Staging 環境"]
+    Staging --> Prod["main branch<br/>Production 環境"]
 
     Dev -.->|"PR + CI 驗證"| Staging
     Staging -.->|"PR + 人工審查 + CI"| Prod
@@ -990,9 +990,9 @@ NixOS 的「系統世代（Generation）」與 Git commit 之間有明確的對�
 
 ```mermaid
 flowchart TD
-    A["Git Commit abc123\n2026-05-01"] -->|"nixos-rebuild switch"| B["Generation 42\n系統啟動選項"]
-    C["Git Commit def456\n2026-05-10"] -->|"nixos-rebuild switch"| D["Generation 43\n系統啟動選項"]
-    E["Git Commit ghi789\n2026-05-15"] -->|"nixos-rebuild switch"| F["Generation 44\n系統啟動選項"]
+    A["Git Commit abc123<br/>2026-05-01"] -->|"nixos-rebuild switch"| B["Generation 42<br/>系統啟動選項"]
+    C["Git Commit def456<br/>2026-05-10"] -->|"nixos-rebuild switch"| D["Generation 43<br/>系統啟動選項"]
+    E["Git Commit ghi789<br/>2026-05-15"] -->|"nixos-rebuild switch"| F["Generation 44<br/>系統啟動選項"]
 
     B -.->|"啟動時可選"| G["GRUB 選單"]
     D -.->|"啟動時可選"| G
@@ -1087,21 +1087,21 @@ git log --follow -p -- modules/networking/firewall.nix
 
 ```mermaid
 flowchart TD
-    A["需求分析\n決定配置變更"] --> B["建立 feature branch\ngit checkout -b feature/nginx-upgrade"]
-    B --> C["修改 NixOS 配置\n本機測試"]
-    C --> D["git commit\ngit push"]
-    D --> E["建立 Pull Request\n加入變更說明"]
-    E --> F["CI 自動觸發\n• nix flake check\n• nix build（所有主機）\n• 產生 diff 報告"]
+    A["需求分析<br/>決定配置變更"] --> B["建立 feature branch<br/>git checkout -b feature/nginx-upgrade"]
+    B --> C["修改 NixOS 配置<br/>本機測試"]
+    C --> D["git commit<br/>git push"]
+    D --> E["建立 Pull Request<br/>加入變更說明"]
+    E --> F["CI 自動觸發<br/>• nix flake check<br/>• nix build（所有主機）<br/>• 產生 diff 報告"]
     F -->|CI 失敗| C
-    F -->|CI 通過| G["同事 Code Review\n檢查配置合理性"]
+    F -->|CI 通過| G["同事 Code Review<br/>檢查配置合理性"]
     G -->|需要修改| C
     G -->|批准| H["Merge to main"]
-    H --> I["CD 自動觸發\n• nix build（最終確認）\n• 推送 Cachix\n• nixos-rebuild switch"]
-    I -->|部署成功| J["✅ 監控確認\n系統健康"]
-    I -->|部署失敗| K["❌ 自動 rollback\n告警通知"]
-    K --> L["git revert\n建立修正 PR"]
+    H --> I["CD 自動觸發<br/>• nix build（最終確認）<br/>• 推送 Cachix<br/>• nixos-rebuild switch"]
+    I -->|部署成功| J["✅ 監控確認<br/>系統健康"]
+    I -->|部署失敗| K["❌ 自動 rollback<br/>告警通知"]
+    K --> L["git revert<br/>建立修正 PR"]
     L --> E
-    J --> M["Git log 記錄\n完整審計追蹤"]
+    J --> M["Git log 記錄<br/>完整審計追蹤"]
 ```
 
 ---

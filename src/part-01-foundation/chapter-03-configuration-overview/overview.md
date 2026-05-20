@@ -360,12 +360,12 @@ nixpkgs（NixOS 的套件庫和模組庫）包含了數千個現成的模組。
 
 ```mermaid
 graph TD
-    A["configuration.nix\n（你的主模組）"]
-    B["hardware-configuration.nix\n（硬體模組）"]
-    C["nixpkgs openssh 模組\n（services.openssh）"]
-    D["nixpkgs nginx 模組\n（services.nginx）"]
-    E["nixpkgs postgresql 模組\n（services.postgresql）"]
-    F["NixOS Module System\n（合併所有模組）"]
+    A["configuration.nix<br/>（你的主模組）"]
+    B["hardware-configuration.nix<br/>（硬體模組）"]
+    C["nixpkgs openssh 模組<br/>（services.openssh）"]
+    D["nixpkgs nginx 模組<br/>（services.nginx）"]
+    E["nixpkgs postgresql 模組<br/>（services.postgresql）"]
+    F["NixOS Module System<br/>（合併所有模組）"]
     G["完整系統配置"]
 
     A -->|imports| F
@@ -544,21 +544,21 @@ NixOS 選項系統支援豐富的型別：
 
 ```mermaid
 graph TD
-    A["/etc/nixos/configuration.nix\n以及所有 imports 的模組"] --> B
+    A["/etc/nixos/configuration.nix<br/>以及所有 imports 的模組"] --> B
 
-    B["Nix Evaluation（求值）\n執行 Nix 語言，合併所有模組\n計算每個選項的最終值"]
+    B["Nix Evaluation（求值）<br/>執行 Nix 語言，合併所有模組<br/>計算每個選項的最終值"]
 
-    B --> C["建構描述（Derivation）圖\n每個需要建置的東西\n都描述成一個 derivation"]
+    B --> C["建構描述（Derivation）圖<br/>每個需要建置的東西<br/>都描述成一個 derivation"]
 
-    C --> D["Build（建置）\n執行實際的編譯與安裝\n（或從 binary cache 下載）"]
+    C --> D["Build（建置）<br/>執行實際的編譯與安裝<br/>（或從 binary cache 下載）"]
 
-    D --> E["/nix/store/... 路徑\n所有建置結果存放在\nNix 儲存庫（Nix Store）"]
+    D --> E["/nix/store/... 路徑<br/>所有建置結果存放在<br/>Nix 儲存庫（Nix Store）"]
 
-    E --> F["系統閉包（System Closure）\n這台機器需要的\n所有東西的完整集合"]
+    E --> F["系統閉包（System Closure）<br/>這台機器需要的<br/>所有東西的完整集合"]
 
-    F --> G["nixos-rebuild switch\n原子切換到新系統\n更新 /run/current-system 符號連結"]
+    F --> G["nixos-rebuild switch<br/>原子切換到新系統<br/>更新 /run/current-system 符號連結"]
 
-    G --> H["Running System\n新的系統正在運行\n舊 generation 保留，可隨時 rollback"]
+    G --> H["Running System<br/>新的系統正在運行<br/>舊 generation 保留，可隨時 rollback"]
 ```
 
 ### 逐步說明每個階段

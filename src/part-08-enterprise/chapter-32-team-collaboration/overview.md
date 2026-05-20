@@ -1135,9 +1135,9 @@ devShells.default = pkgs.mkShell {
 
 ```mermaid
 flowchart LR
-    A["Phase 1\n新舊並存\n（deprecation 宣告）"] --> B["Phase 2\n發出警告\n（lib.warn）"]
-    B --> C["Phase 3\n更新所有使用者\n（批次 PR）"]
-    C --> D["Phase 4\n移除舊配置\n（清理）"]
+    A["Phase 1<br/>新舊並存<br/>（deprecation 宣告）"] --> B["Phase 2<br/>發出警告<br/>（lib.warn）"]
+    B --> C["Phase 3<br/>更新所有使用者<br/>（批次 PR）"]
+    C --> D["Phase 4<br/>移除舊配置<br/>（清理）"]
 
     style A fill:#e8f4f8,stroke:#2196F3
     style B fill:#fff3e0,stroke:#FF9800
@@ -1298,40 +1298,40 @@ Migration: replace `services.internal-vpn.serverAddress = "..."` with
 ```mermaid
 graph TB
     subgraph P1["第一篇：理解 NixOS（第1-3章）"]
-        C1["第1章：設計哲學\n宣告式、可重現、不可變"]
-        C2["第2章：Nix 語言\nAttribute Set、函數、lazy evaluation"]
-        C3["第3章：配置系統概覽\nconfiguration.nix、option tree"]
+        C1["第1章：設計哲學<br/>宣告式、可重現、不可變"]
+        C2["第2章：Nix 語言<br/>Attribute Set、函數、lazy evaluation"]
+        C3["第3章：配置系統概覽<br/>configuration.nix、option tree"]
     end
 
     subgraph P2["第二篇：configuration.nix 深入（第4-7章）"]
-        C4["第4-5章：基本結構與 imports\n模組化的基礎"]
-        C6["第6-7章：Option 系統\nmkOption、mkIf、module system"]
+        C4["第4-5章：基本結構與 imports<br/>模組化的基礎"]
+        C6["第6-7章：Option 系統<br/>mkOption、mkIf、module system"]
     end
 
     subgraph P3["第三篇：系統配置實務（第8-12章）"]
-        C8["第8-9章：硬體與 Boot\nfileSystems、kernelParams"]
-        C10["第10-12章：網路、使用者、套件\n系統的三大基礎"]
+        C8["第8-9章：硬體與 Boot<br/>fileSystems、kernelParams"]
+        C10["第10-12章：網路、使用者、套件<br/>系統的三大基礎"]
     end
 
     subgraph P4["第四篇：服務配置（第13-16章）"]
-        C13["第13-16章：systemd、服務、桌面、開發環境\n讓系統做實際的事"]
+        C13["第13-16章：systemd、服務、桌面、開發環境<br/>讓系統做實際的事"]
     end
 
     subgraph P5["第五篇：Flakes（第17-20章）"]
-        C17["第17-20章：Flakes、多主機、Home Manager\n現代 NixOS 架構"]
+        C17["第17-20章：Flakes、多主機、Home Manager<br/>現代 NixOS 架構"]
     end
 
     subgraph P6["第六篇：進階配置（第21-25章）"]
-        C21["第21-25章：Overlay、Secrets、自訂模組、部署、效能\n工程師的工具箱"]
+        C21["第21-25章：Overlay、Secrets、自訂模組、部署、效能<br/>工程師的工具箱"]
     end
 
     subgraph P7["第七篇：除錯與維護（第26-28章）"]
-        C26["第26-28章：除錯、升級、常見陷阱\n讓系統長期健康運作"]
+        C26["第26-28章：除錯、升級、常見陷阱<br/>讓系統長期健康運作"]
     end
 
     subgraph P8["第八篇：企業（第29-32章）"]
-        C29["第29-31章：伺服器、雲端、CI/CD\n生產環境的基礎設施"]
-        C32["第32章：團隊協作\n讓 NixOS 在組織中擴展"]
+        C29["第29-31章：伺服器、雲端、CI/CD<br/>生產環境的基礎設施"]
+        C32["第32章：團隊協作<br/>讓 NixOS 在組織中擴展"]
     end
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8

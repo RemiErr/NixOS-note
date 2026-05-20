@@ -1277,12 +1277,12 @@ graph LR
     end
 
     subgraph groups["群組"]
-        wheel["wheel\n（sudo 特權）"]
-        docker["docker\n（容器操作）"]
-        audio["audio\n（音訊存取）"]
-        video["video\n（視訊存取）"]
-        networkmanager["networkmanager\n（網路管理）"]
-        cigroup["ci\n（CI 服務）"]
+        wheel["wheel<br/>（sudo 特權）"]
+        docker["docker<br/>（容器操作）"]
+        audio["audio<br/>（音訊存取）"]
+        video["video<br/>（視訊存取）"]
+        networkmanager["networkmanager<br/>（網路管理）"]
+        cigroup["ci<br/>（CI 服務）"]
     end
 
     subgraph privileges["權限"]

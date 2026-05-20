@@ -962,14 +962,14 @@ nix run nixpkgs#skopeo -- copy \
 ```mermaid
 flowchart LR
   subgraph 建置["建置階段（本機或 CI）"]
-    A[flake.nix\npkgs.dockerTools.buildLayeredImage] --> B[nix build .#dockerImage]
-    B --> C[result 符號連結\n指向 /nix/store/...-docker-image.tar.gz]
+    A[flake.nix<br/>pkgs.dockerTools.buildLayeredImage] --> B[nix build .#dockerImage]
+    B --> C[result 符號連結<br/>指向 /nix/store/...-docker-image.tar.gz]
   end
 
   subgraph 載入["載入與測試"]
     C --> D[docker load < result]
     D --> E[docker run --rm -p 8080:80 my-nginx]
-    E --> F[curl localhost:8080\n驗證功能]
+    E --> F[curl localhost:8080<br/>驗證功能]
   end
 
   subgraph 推送["推送到 Registry"]
@@ -1108,16 +1108,16 @@ nixos-anywhere 透過 SSH 連線到目標主機，
 
 ```mermaid
 flowchart TD
-  A[目標主機\n運行任意 Linux 或 Rescue Mode] -->|SSH 連線| B[本機執行\nnixos-anywhere --flake .#myserver root@IP]
+  A[目標主機<br/>運行任意 Linux 或 Rescue Mode] -->|SSH 連線| B[本機執行<br/>nixos-anywhere --flake .#myserver root@IP]
 
   B --> C{nixos-anywhere 執行步驟}
 
-  C --> D[1. 上傳 disko 配置\n並執行磁碟分區]
+  C --> D[1. 上傳 disko 配置<br/>並執行磁碟分區]
   D --> E[2. 掛載新的磁碟分區]
-  E --> F[3. 計算 NixOS system closure\n並複製到目標主機]
-  F --> G[4. nixos-install\n安裝 bootloader]
+  E --> F[3. 計算 NixOS system closure<br/>並複製到目標主機]
+  F --> G[4. nixos-install<br/>安裝 bootloader]
   G --> H[5. 重新開機]
-  H --> I[目標主機\n成功運行 NixOS]
+  H --> I[目標主機<br/>成功運行 NixOS]
 
   style A fill:#f9f,stroke:#333
   style I fill:#9f9,stroke:#333

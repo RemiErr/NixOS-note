@@ -55,14 +55,14 @@ Bootloader 則被設定成「每一個世代（Generation）都有一個開機�
 ```mermaid
 flowchart TD
     A["UEFI 韌體啟動"] --> B["讀取 EFI 分區"]
-    B --> C["執行 Bootloader\n（systemd-boot 或 GRUB）"]
-    C --> D["世代選單（Generation Menu）\n列出所有可開機世代"]
-    D --> E["使用者選擇世代\n（預設最新）"]
-    E --> F["載入對應 kernel\n從 /nix/store/ 讀取"]
-    F --> G["載入 initrd\n（Initial RAM Disk）"]
-    G --> H["initrd 初始化硬體\n執行 initrd hooks"]
+    B --> C["執行 Bootloader<br/>（systemd-boot 或 GRUB）"]
+    C --> D["世代選單（Generation Menu）<br/>列出所有可開機世代"]
+    D --> E["使用者選擇世代<br/>（預設最新）"]
+    E --> F["載入對應 kernel<br/>從 /nix/store/ 讀取"]
+    F --> G["載入 initrd<br/>（Initial RAM Disk）"]
+    G --> H["initrd 初始化硬體<br/>執行 initrd hooks"]
     H --> I["掛載根目錄（/）"]
-    I --> J["Stage 2 啟動\nsystemd 成為 PID 1"]
+    I --> J["Stage 2 啟動<br/>systemd 成為 PID 1"]
     J --> K["啟動所有 systemd 服務"]
     K --> L["系統就緒"]
 
@@ -850,18 +850,18 @@ NixOS 提供幾個 hook 讓你在 initrd 的不同階段插入自訂腳本。
 
 ```mermaid
 flowchart TD
-    A["UEFI 啟動\nsystemd-boot 選單"] --> B["載入 kernel + initrd"]
-    B --> C["initrd 啟動\n載入 dm-crypt, nvme 等 module"]
-    C --> D["執行 preLVMCommands\n（自訂腳本）"]
-    D --> E["要求使用者輸入\nLUKS passphrase"]
+    A["UEFI 啟動<br/>systemd-boot 選單"] --> B["載入 kernel + initrd"]
+    B --> C["initrd 啟動<br/>載入 dm-crypt, nvme 等 module"]
+    C --> D["執行 preLVMCommands<br/>（自訂腳本）"]
+    D --> E["要求使用者輸入<br/>LUKS passphrase"]
     E --> F{"passphrase 正確？"}
     F -- 否 --> E
-    F -- 是 --> G["/dev/mapper/cryptroot\n（加密磁碟已解鎖）"]
-    G --> H["執行 postDeviceCommands\n（自訂腳本）"]
-    H --> I["LVM 掃描\n發現 vg0 卷組"]
-    I --> J["掛載根目錄 /\n（來自 lv-root）"]
-    J --> K["initrd 交棒給 Stage 2\nsystemd 啟動"]
-    K --> L["掛載 /home\n（來自 lv-home）"]
+    F -- 是 --> G["/dev/mapper/cryptroot<br/>（加密磁碟已解鎖）"]
+    G --> H["執行 postDeviceCommands<br/>（自訂腳本）"]
+    H --> I["LVM 掃描<br/>發現 vg0 卷組"]
+    I --> J["掛載根目錄 /<br/>（來自 lv-root）"]
+    J --> K["initrd 交棒給 Stage 2<br/>systemd 啟動"]
+    K --> L["掛載 /home<br/>（來自 lv-home）"]
     L --> M["系統就緒"]
 
     style E fill:#f9a825,color:#000

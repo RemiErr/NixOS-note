@@ -64,9 +64,9 @@ Overlay 的設計解決了這個問題：
 ```mermaid
 flowchart LR
     A["nixpkgs 原始"]
-    B["overlay 1\n升級 neovim"]
-    C["overlay 2\n新增 myapp"]
-    D["最終 pkgs\n供系統使用"]
+    B["overlay 1<br/>升級 neovim"]
+    C["overlay 2<br/>新增 myapp"]
+    D["最終 pkgs<br/>供系統使用"]
 
     A --> B --> C --> D
 
@@ -213,15 +213,15 @@ Overlay 的機制背後是一個數學概念：固定點組合子（Fixed-Point 
 flowchart TB
     subgraph 求值過程
         direction TB
-        A["nixpkgs 原始定義\nprev = { neovim = v0.9; openssl = v3.0; ... }"]
-        B["套用 overlay A\n→ openssl 升級為 v3.3"]
-        C["套用 overlay B\n→ mySecureApp 使用 final.openssl（v3.3）"]
-        D["final（固定點）\n= { neovim = v0.9; openssl = v3.3; mySecureApp = ... }"]
+        A["nixpkgs 原始定義<br/>prev = { neovim = v0.9; openssl = v3.0; ... }"]
+        B["套用 overlay A<br/>→ openssl 升級為 v3.3"]
+        C["套用 overlay B<br/>→ mySecureApp 使用 final.openssl（v3.3）"]
+        D["final（固定點）<br/>= { neovim = v0.9; openssl = v3.3; mySecureApp = ... }"]
     end
 
     A --> B --> C --> D
 
-    E["所有 overlay 中的 final\n都指向同一個 D"]
+    E["所有 overlay 中的 final<br/>都指向同一個 D"]
     D -.->|"固定點"| E
 
     style D fill:#dcfce7,stroke:#16a34a
@@ -1249,11 +1249,11 @@ nix-repl> outputs.nixosConfigurations.nixos.pkgs.myapp
 
 ```mermaid
 flowchart LR
-    A["nixpkgs 原始\n（prev 的起點）"]
-    B["overlay 1\n（neovim 升級）"]
-    C["overlay 2\n（本地套件）"]
-    D["final\n（所有修改後的最終 pkgs）"]
-    E["NixOS 系統\n使用 final"]
+    A["nixpkgs 原始<br/>（prev 的起點）"]
+    B["overlay 1<br/>（neovim 升級）"]
+    C["overlay 2<br/>（本地套件）"]
+    D["final<br/>（所有修改後的最終 pkgs）"]
+    E["NixOS 系統<br/>使用 final"]
 
     A -->|"prev"| B
     B -->|"prev"| C

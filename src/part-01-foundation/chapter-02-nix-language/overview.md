@@ -413,9 +413,9 @@ x: y: x + y
 
 ```mermaid
 flowchart LR
-    F["x: y: x + y\n(雙層函式)"] -->|套用 3| P["y: 3 + y\n(部分應用，仍是函式)"]
-    P -->|套用 4| R["3 + 4\n(完全應用)"]
-    R --> V["7\n(最終值)"]
+    F["x: y: x + y<br/>(雙層函式)"] -->|套用 3| P["y: 3 + y<br/>(部分應用，仍是函式)"]
+    P -->|套用 4| R["3 + 4<br/>(完全應用)"]
+    R --> V["7<br/>(最終值)"]
 ```
 
 這就是 **currying**：多參數函式被拆成一連串單參數函式，因此 `f 3` 是合法的（得到一個新函式），`f 3 4` 才得到最終結果。
@@ -912,12 +912,12 @@ y   # 結果：42（因為我們只用到 y，x 從未被求值）
 
 ```mermaid
 flowchart LR
-    Src["原始碼\nlet x = 1/0; y = 42; in y"] --> Parse["Parser"]
+    Src["原始碼<br/>let x = 1/0; y = 42; in y"] --> Parse["Parser"]
     Parse --> AST["AST"]
-    AST --> Bind["建立綁定\nx -> Thunk(1/0)\ny -> Thunk(42)"]
+    AST --> Bind["建立綁定<br/>x -> Thunk(1/0)<br/>y -> Thunk(42)"]
     Bind --> Need{"是否被需要?"}
     Need -->|y 被需要| ForceY["強制求值 Thunk(y)"]
-    Need -->|x 從未被需要| Skip["Thunk(x) 永遠不求值\n(因此不報錯)"]
+    Need -->|x 從未被需要| Skip["Thunk(x) 永遠不求值<br/>(因此不報錯)"]
     ForceY --> Result["結果：42"]
 ```
 

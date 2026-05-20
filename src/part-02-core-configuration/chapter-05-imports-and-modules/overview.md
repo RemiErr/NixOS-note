@@ -934,11 +934,11 @@ NixOS 在求值時會偵測到這個問題，並拋出錯誤。但更好的做�
 
 ```mermaid
 graph TD
-  subgraph 上層（可以 import 下層）
+  subgraph upper ["上層（可以 import 下層）"]
     H[hosts/]
     P[profiles/]
   end
-  subgraph 下層（不應該 import 上層）
+  subgraph lower ["下層（不應該 import 上層）"]
     M[modules/]
     C[modules/common/]
   end

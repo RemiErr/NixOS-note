@@ -86,13 +86,13 @@ NixOS 的 devShell（開發 Shell 環境）用一句話解決了上述所有問�
 ```mermaid
 flowchart LR
     A[cd 進入專案目錄] --> B{有 flake.nix 嗎?}
-    B -- 是 --> C[nix develop\n或 direnv allow]
+    B -- 是 --> C[nix develop<br/>或 direnv allow]
     B -- 否 --> D[nix shell nixpkgs#工具]
-    C --> E[進入隔離的 devShell\n工具出現在 PATH]
+    C --> E[進入隔離的 devShell<br/>工具出現在 PATH]
     D --> E
-    E --> F[使用 gcc / python / node ...\n版本完全固定]
+    E --> F[使用 gcc / python / node ...<br/>版本完全固定]
     F --> G[exit 或 cd 離開]
-    G --> H[工具從 PATH 消失\n系統保持乾淨]
+    G --> H[工具從 PATH 消失<br/>系統保持乾淨]
 
     style E fill:#d4edda,stroke:#28a745
     style H fill:#fff3cd,stroke:#ffc107
@@ -1308,18 +1308,18 @@ devShell 不限於 NixOS，Nix 是跨平台工具，可在以下環境使用：
 ```mermaid
 flowchart TD
     subgraph A["傳統方式"]
-        A1["撰寫 README\n列出安裝步驟"] --> A2["新成員手動執行\n每個步驟"]
-        A2 --> A3["遇到問題\n詢問同事"]
-        A3 --> A4["版本不一致\n重現問題困難"]
-        A4 --> A5["本地OK\nCI失敗"]
-        A5 --> A6["手動調試CI環境\n浪費時間"]
+        A1["撰寫 README<br/>列出安裝步驟"] --> A2["新成員手動執行<br/>每個步驟"]
+        A2 --> A3["遇到問題<br/>詢問同事"]
+        A3 --> A4["版本不一致<br/>重現問題困難"]
+        A4 --> A5["本地OK<br/>CI失敗"]
+        A5 --> A6["手動調試CI環境<br/>浪費時間"]
     end
 
     subgraph B["devShell 方式"]
-        B1["撰寫 flake.nix\n一次設定"] --> B2["git clone + nix develop\n或 direnv allow"]
-        B2 --> B3["環境自動建立\n版本 100% 一致"]
-        B3 --> B4["本地測試通過\nCI 也通過"]
-        B4 --> B5["新成員加入\n重複 B2 步驟"]
+        B1["撰寫 flake.nix<br/>一次設定"] --> B2["git clone + nix develop<br/>或 direnv allow"]
+        B2 --> B3["環境自動建立<br/>版本 100% 一致"]
+        B3 --> B4["本地測試通過<br/>CI 也通過"]
+        B4 --> B5["新成員加入<br/>重複 B2 步驟"]
         B5 --> B3
     end
 

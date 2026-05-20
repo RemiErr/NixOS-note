@@ -87,7 +87,7 @@ final: prev: {
 
 ```mermaid
 graph LR
-    A["prev.ffmpeg\n（覆蓋前的原始版本）"] -->|override| B["final.ffmpeg\n（覆蓋後的新版本）"]
+    A["prev.ffmpeg<br/>（覆蓋前的原始版本）"] -->|override| B["final.ffmpeg<br/>（覆蓋後的新版本）"]
     B -.->|❌ 錯誤：用 final 參照自己| B
     A -->|✅ 正確：用 prev| B
 
@@ -893,21 +893,21 @@ Operation not permitted
 
 ```mermaid
 flowchart TD
-    A["服務啟動失敗\njournalctl -u myservice"] --> B{錯誤關鍵字}
+    A["服務啟動失敗<br/>journalctl -u myservice"] --> B{錯誤關鍵字}
 
-    B -->|"Permission denied\n/run/secrets/"| C["agenix/sops-nix 機密問題"]
-    B -->|"Permission denied\n/var/lib/"| D["StateDirectory 問題"]
-    B -->|"No such file\n/tmp/"| E["PrivateTmp 隔離問題"]
-    B -->|"Permission denied\nport 80/443"| F["低號 Port 問題"]
-    B -->|"Permission denied\n其他路徑"| G["一般 Permission 問題"]
+    B -->|"Permission denied<br/>/run/secrets/"| C["agenix/sops-nix 機密問題"]
+    B -->|"Permission denied<br/>/var/lib/"| D["StateDirectory 問題"]
+    B -->|"No such file<br/>/tmp/"| E["PrivateTmp 隔離問題"]
+    B -->|"Permission denied<br/>port 80/443"| F["低號 Port 問題"]
+    B -->|"Permission denied<br/>其他路徑"| G["一般 Permission 問題"]
 
-    C --> C1["設定 age.secrets.xxx.owner\n或 mode = '0640'"]
-    D --> D1["設定 serviceConfig.StateDirectory\n或 User = 'myapp'"]
-    E --> E1["改用 RuntimeDirectory\n或關閉 PrivateTmp"]
-    F --> F1["加 AmbientCapabilities\n或改用高號 Port + reverse proxy"]
-    G --> G1["檢查 systemd-analyze security\n確認 sandbox 設定"]
+    C --> C1["設定 age.secrets.xxx.owner<br/>或 mode = '0640'"]
+    D --> D1["設定 serviceConfig.StateDirectory<br/>或 User = 'myapp'"]
+    E --> E1["改用 RuntimeDirectory<br/>或關閉 PrivateTmp"]
+    F --> F1["加 AmbientCapabilities<br/>或改用高號 Port + reverse proxy"]
+    G --> G1["檢查 systemd-analyze security<br/>確認 sandbox 設定"]
 
-    C1 --> Z["nixos-rebuild switch\n再次確認 journalctl"]
+    C1 --> Z["nixos-rebuild switch<br/>再次確認 journalctl"]
     D1 --> Z
     E1 --> Z
     F1 --> Z
@@ -1090,14 +1090,14 @@ flowchart TD
     TYPE -->|"套件找不到"| PKG["nix search nixpkgs <name>"]
     TYPE -->|"建置成功但行為不對"| STATE["檢查 mutableUsers 狀態"]
 
-    REBUILD -->|"infinite recursion"| R1["加 --show-trace\n找 overlay self/prev 問題"]
-    REBUILD -->|"attribute missing"| R2["nixos-option 確認\n或查 NixOS 改名清單"]
-    REBUILD -->|"conflicting definitions"| R3["找衝突來源\n用 mkForce / mkDefault"]
-    REBUILD -->|"marked as broken"| R4["allowBroken 或\noverlay 修復版本"]
-    REBUILD -->|"flake attribute missing"| R5["nix flake show <url>\n確認 output schema"]
+    REBUILD -->|"infinite recursion"| R1["加 --show-trace<br/>找 overlay self/prev 問題"]
+    REBUILD -->|"attribute missing"| R2["nixos-option 確認<br/>或查 NixOS 改名清單"]
+    REBUILD -->|"conflicting definitions"| R3["找衝突來源<br/>用 mkForce / mkDefault"]
+    REBUILD -->|"marked as broken"| R4["allowBroken 或<br/>overlay 修復版本"]
+    REBUILD -->|"flake attribute missing"| R5["nix flake show <url><br/>確認 output schema"]
 
-    SERVICE -->|"Permission denied"| S1["查 28.8 Permission 表格\n確認 StateDirectory/owner"]
-    SERVICE -->|"其他錯誤"| S2["systemd-analyze security\n確認 sandbox 設定"]
+    SERVICE -->|"Permission denied"| S1["查 28.8 Permission 表格<br/>確認 StateDirectory/owner"]
+    SERVICE -->|"其他錯誤"| S2["systemd-analyze security<br/>確認 sandbox 設定"]
 
     R1 --> FIX["修復 → nixos-rebuild switch"]
     R2 --> FIX
@@ -1111,7 +1111,7 @@ flowchart TD
 
     FIX --> SUCCESS{成功？}
     SUCCESS -->|是| DONE["完成"]
-    SUCCESS -->|否| TRACE["加 --show-trace\n查完整錯誤，再次診斷"]
+    SUCCESS -->|否| TRACE["加 --show-trace<br/>查完整錯誤，再次診斷"]
     TRACE --> TYPE
 ```
 

@@ -726,20 +726,20 @@ NixOS 的 `hardware.nvidia` 模組會自動處理這個問題，通常不需要�
 
 ```mermaid
 flowchart TD
-    START([你有什麼顯示卡？]) --> CHECK_DUAL{是否為雙顯示卡？\nAPU + 獨顯？}
-    CHECK_DUAL -->|是| PRIME[設定 PRIME Offload\n見下方 Hybrid GPU 段落]
+    START([你有什麼顯示卡？]) --> CHECK_DUAL{是否為雙顯示卡？<br/>APU + 獨顯？}
+    CHECK_DUAL -->|是| PRIME[設定 PRIME Offload<br/>見下方 Hybrid GPU 段落]
     CHECK_DUAL -->|否| SINGLE_TYPE{單一顯示卡廠商}
 
-    SINGLE_TYPE -->|NVIDIA| NVIDIA_PATH[hardware.nvidia\n啟用 modesetting]
-    SINGLE_TYPE -->|AMD| AMD_PATH[開源 amdgpu 預設啟用\n加入 videoDrivers 確認]
-    SINGLE_TYPE -->|Intel 核顯| INTEL_PATH[hardware.graphics.enable\n啟用 OpenGL / VA-API]
+    SINGLE_TYPE -->|NVIDIA| NVIDIA_PATH[hardware.nvidia<br/>啟用 modesetting]
+    SINGLE_TYPE -->|AMD| AMD_PATH[開源 amdgpu 預設啟用<br/>加入 videoDrivers 確認]
+    SINGLE_TYPE -->|Intel 核顯| INTEL_PATH[hardware.graphics.enable<br/>啟用 OpenGL / VA-API]
 
     NVIDIA_PATH --> NVIDIA_OPEN{使用開源還是閉源？}
-    NVIDIA_OPEN -->|閉源（建議）| NVIDIA_CLOSED[hardware.nvidia.open = false\nvideoDrivers = nvidia]
-    NVIDIA_OPEN -->|開源核心模組| NVIDIA_OPEN2[hardware.nvidia.open = true\n僅 Turing 以上支援]
+    NVIDIA_OPEN -->|"閉源（建議）"| NVIDIA_CLOSED["hardware.nvidia.open = false<br/>videoDrivers = nvidia"]
+    NVIDIA_OPEN -->|開源核心模組| NVIDIA_OPEN2[hardware.nvidia.open = true<br/>僅 Turing 以上支援]
 
-    AMD_PATH --> AMD_DONE[通常無需額外配置\n可加 hardware.amdgpu.opencl.enable]
-    INTEL_PATH --> INTEL_VA[hardware.graphics.extraPackages\n加入 intel-media-driver]
+    AMD_PATH --> AMD_DONE[通常無需額外配置<br/>可加 hardware.amdgpu.opencl.enable]
+    INTEL_PATH --> INTEL_VA[hardware.graphics.extraPackages<br/>加入 intel-media-driver]
 ```
 
 ### NVIDIA：閉源驅動配置

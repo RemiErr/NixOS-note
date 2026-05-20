@@ -228,16 +228,16 @@ NixOS Module 有兩種基本形式。
 ```mermaid
 graph LR
   subgraph user["使用者（configuration.nix）"]
-    U["my.feature.enable = true\nmy.feature.message = '自訂訊息'"]
+    U["my.feature.enable = true<br/>my.feature.message = '自訂訊息'"]
   end
 
   subgraph module["模組（feature.nix）"]
-    O["options：\n宣告 my.feature.enable 的型別\n宣告 my.feature.message 的型別與預設值"]
-    C["config：\n如果 enable = true，\n就寫入設定檔並安裝套件"]
+    O["options：<br/>宣告 my.feature.enable 的型別<br/>宣告 my.feature.message 的型別與預設值"]
+    C["config：<br/>如果 enable = true，<br/>就寫入設定檔並安裝套件"]
   end
 
   subgraph result["最終結果"]
-    S["/etc/my-feature.conf\n包含自訂訊息"]
+    S["/etc/my-feature.conf<br/>包含自訂訊息"]
   end
 
   U -->|設定值| O
@@ -289,29 +289,29 @@ graph LR
 flowchart TD
     A["nixos-rebuild switch"] --> B
 
-    B["第一階段：收集（Collection）\n掃描所有已載入的模組\nconfiguration.nix\nhardware-configuration.nix\nnixpkgs 內建模組（自動）\n你自訂的模組..."]
+    B["第一階段：收集（Collection）<br/>掃描所有已載入的模組<br/>configuration.nix<br/>hardware-configuration.nix<br/>nixpkgs 內建模組（自動）<br/>你自訂的模組..."]
 
     B --> C
 
-    C["第二階段：建立 Option Schema\n收集所有 options 宣告\n建立完整的選項型別表\n驗證選項型別是否正確"]
+    C["第二階段：建立 Option Schema<br/>收集所有 options 宣告<br/>建立完整的選項型別表<br/>驗證選項型別是否正確"]
 
     C --> D
 
-    D["第三階段：求值（Evaluation）\n計算每個模組的 config 值\n根據 option 定義驗證型別\n套用優先權（mkDefault / mkForce）\n解決合併衝突"]
+    D["第三階段：求值（Evaluation）<br/>計算每個模組的 config 值<br/>根據 option 定義驗證型別<br/>套用優先權（mkDefault / mkForce）<br/>解決合併衝突"]
 
     D --> E
 
-    E["第四階段：合併（Merge）\n把所有模組的 config 做 deep merge\n列表型別做 concat\n布林型別做 OR 或 AND\n字串型別做 concat 或 replace"]
+    E["第四階段：合併（Merge）<br/>把所有模組的 config 做 deep merge<br/>列表型別做 concat<br/>布林型別做 OR 或 AND<br/>字串型別做 concat 或 replace"]
 
     E --> F
 
-    F["第五階段：惰性求值（Lazy Evaluation）\n只計算實際被使用的部分\nmkIf false 的內容永遠不被求值\n未啟用的模組不消耗計算資源"]
+    F["第五階段：惰性求值（Lazy Evaluation）<br/>只計算實際被使用的部分<br/>mkIf false 的內容永遠不被求值<br/>未啟用的模組不消耗計算資源"]
 
     F --> G
 
-    G["第六階段：生成 Derivations\n轉換為 Nix derivations\n每個 derivation 代表一個建構任務"]
+    G["第六階段：生成 Derivations<br/>轉換為 Nix derivations<br/>每個 derivation 代表一個建構任務"]
 
-    G --> H["/nix/store 中的 system closure\n可開機的系統"]
+    G --> H["/nix/store 中的 system closure<br/>可開機的系統"]
 ```
 
 ### 各階段說明
@@ -658,21 +658,21 @@ Module System 會遞迴展開所有 `imports`。
 
 ```mermaid
 graph TD
-  A["configuration.nix\nimports: [hardware.nix, modules/desktop.nix, modules/users.nix]"]
+  A["configuration.nix<br/>imports: [hardware.nix, modules/desktop.nix, modules/users.nix]"]
 
-  B["hardware-configuration.nix\nimports: [某些自動偵測模組]"]
+  B["hardware-configuration.nix<br/>imports: [某些自動偵測模組]"]
 
-  C["modules/desktop.nix\nimports: [modules/audio.nix, modules/fonts.nix]"]
+  C["modules/desktop.nix<br/>imports: [modules/audio.nix, modules/fonts.nix]"]
 
-  D["modules/users.nix\n無 imports"]
+  D["modules/users.nix<br/>無 imports"]
 
-  E["modules/audio.nix\n無 imports"]
+  E["modules/audio.nix<br/>無 imports"]
 
-  F["modules/fonts.nix\n無 imports"]
+  F["modules/fonts.nix<br/>無 imports"]
 
-  G["nixpkgs 內建模組\n（自動載入，不需要手動 import）"]
+  G["nixpkgs 內建模組<br/>（自動載入，不需要手動 import）"]
 
-  MERGE["Module System\n收集所有模組"]
+  MERGE["Module System<br/>收集所有模組"]
 
   FINAL["最終合併結果"]
 
@@ -1049,14 +1049,14 @@ config = lib.mkIf cfg.enable {
 
 ```mermaid
 flowchart LR
-  P1["原則一\n永遠預設關閉\nmkEnableOption"]
-  P2["原則二\n明確型別\nlib.types.*"]
-  P3["原則三\n有意義的預設值\ndefault = ..."]
-  P4["原則四\n不寫死路徑\n動態讀取"]
-  P5["原則五\nlet cfg = ...\n縮短引用路徑"]
-  P6["原則六\nassertions\n驗證合法性"]
+  P1["原則一<br/>永遠預設關閉<br/>mkEnableOption"]
+  P2["原則二<br/>明確型別<br/>lib.types.*"]
+  P3["原則三<br/>有意義的預設值<br/>default = ..."]
+  P4["原則四<br/>不寫死路徑<br/>動態讀取"]
+  P5["原則五<br/>let cfg = ...<br/>縮短引用路徑"]
+  P6["原則六<br/>assertions<br/>驗證合法性"]
 
-  P1 --> RESULT["可重用\n易維護\n易除錯的模組"]
+  P1 --> RESULT["可重用<br/>易維護<br/>易除錯的模組"]
   P2 --> RESULT
   P3 --> RESULT
   P4 --> RESULT

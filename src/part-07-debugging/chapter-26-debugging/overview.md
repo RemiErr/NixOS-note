@@ -105,22 +105,22 @@ Nix 在執行 `nixos-rebuild` 時，會先把 `flake.nix` 和所有 `configurati
 
 ```mermaid
 flowchart TD
-    A["nixos-rebuild switch\n開始執行"] --> B
+    A["nixos-rebuild switch<br/>開始執行"] --> B
 
-    B["Nix Evaluation\n讀取 flake.nix\n合併所有 modules\n計算最終 option 值"]
-    B -- "語法/型別/遞迴錯誤" --> E1["求值錯誤\nEvaluation Error\n\n立即中止，無任何建置"]
+    B["Nix Evaluation<br/>讀取 flake.nix<br/>合併所有 modules<br/>計算最終 option 值"]
+    B -- "語法/型別/遞迴錯誤" --> E1["求值錯誤<br/>Evaluation Error<br/><br/>立即中止，無任何建置"]
 
     B -- "求值成功" --> C
 
-    C["Nix Build\n根據 derivations 建置\n下載/編譯/打包套件"]
-    C -- "編譯失敗/checksum 錯誤" --> E2["建置錯誤\nBuild Error\n\n顯示 .drv 路徑與建置日誌"]
+    C["Nix Build<br/>根據 derivations 建置<br/>下載/編譯/打包套件"]
+    C -- "編譯失敗/checksum 錯誤" --> E2["建置錯誤<br/>Build Error<br/><br/>顯示 .drv 路徑與建置日誌"]
 
     C -- "建置成功" --> D
 
-    D["System Activation\n執行 activate 腳本\n切換服務、建立 symlinks"]
-    D -- "服務啟動失敗/衝突" --> E3["啟用錯誤\nActivation Error\n\n新 generation 已建立但未套用"]
+    D["System Activation<br/>執行 activate 腳本<br/>切換服務、建立 symlinks"]
+    D -- "服務啟動失敗/衝突" --> E3["啟用錯誤<br/>Activation Error<br/><br/>新 generation 已建立但未套用"]
 
-    D -- "啟用成功" --> F["系統成功切換\n新 generation 上線"]
+    D -- "啟用成功" --> F["系統成功切換<br/>新 generation 上線"]
 
     style E1 fill:#ff6b6b,color:#fff
     style E2 fill:#ffa500,color:#fff
@@ -843,25 +843,25 @@ systemctl status nginx.service
 
 ```mermaid
 flowchart TD
-    A["服務異常\n（無法連線、功能不正常）"] --> B
+    A["服務異常<br/>（無法連線、功能不正常）"] --> B
 
-    B["systemctl --failed\n列出所有失敗服務"]
+    B["systemctl --failed<br/>列出所有失敗服務"]
     B -- "找到失敗的 unit" --> C
-    B -- "沒有失敗的 unit" --> G["服務在運行但行為異常\n→ 查看服務日誌"]
+    B -- "沒有失敗的 unit" --> G["服務在運行但行為異常<br/>→ 查看服務日誌"]
 
-    C["systemctl status <服務名稱>\n查看服務狀態與最近幾行日誌"]
+    C["systemctl status <服務名稱><br/>查看服務狀態與最近幾行日誌"]
     C --> D
 
-    D["journalctl -u <服務名稱> -n 100\n查看完整最近日誌"]
+    D["journalctl -u <服務名稱> -n 100<br/>查看完整最近日誌"]
     D --> E
 
     E{"找到錯誤關鍵字？"}
-    E -- "是" --> F["對照錯誤關鍵字表\n進行對應修復"]
-    E -- "否，日誌不夠多" --> H["journalctl -u <服務名稱>\n--since '30 min ago'\n展開更長時間範圍"]
+    E -- "是" --> F["對照錯誤關鍵字表<br/>進行對應修復"]
+    E -- "否，日誌不夠多" --> H["journalctl -u <服務名稱><br/>--since '30 min ago'<br/>展開更長時間範圍"]
 
     G --> D
 
-    F --> I["修改 configuration.nix\n執行 nixos-rebuild switch"]
+    F --> I["修改 configuration.nix<br/>執行 nixos-rebuild switch"]
     I --> J{"服務正常了嗎？"}
     J -- "是" --> K["完成"]
     J -- "否" --> D
@@ -1083,27 +1083,27 @@ ls -la ./result
 
 ```mermaid
 flowchart TD
-    A["執行 nixos-rebuild switch\n遇到問題"] --> B
+    A["執行 nixos-rebuild switch<br/>遇到問題"] --> B
 
     B{"錯誤在哪個階段？"}
 
-    B -- "有 'error:' 開頭的訊息\n沒有 .drv 路徑" --> C["求值錯誤\nEvaluation Error"]
-    B -- "有 'builder for .drv failed'\n或 'exit code'" --> D["建置錯誤\nBuild Error"]
+    B -- "有 'error:' 開頭的訊息<br/>沒有 .drv 路徑" --> C["求值錯誤<br/>Evaluation Error"]
+    B -- "有 'builder for .drv failed'<br/>或 'exit code'" --> D["建置錯誤<br/>Build Error"]
     B -- "switch 成功但服務有問題" --> E["啟用或執行期錯誤"]
 
-    C --> C1["加上 --show-trace 重新執行\nnixos-rebuild switch --show-trace 2>&1 | head -80"]
-    C1 --> C2["從 stack trace 底部往上讀\n找到你自己的 .nix 檔案路徑\n對應到有問題的 option"]
-    C2 --> C3["用 nix repl + :lf .\n互動式驗證修復後的值"]
+    C --> C1["加上 --show-trace 重新執行<br/>nixos-rebuild switch --show-trace 2>&1 | head -80"]
+    C1 --> C2["從 stack trace 底部往上讀<br/>找到你自己的 .nix 檔案路徑<br/>對應到有問題的 option"]
+    C2 --> C3["用 nix repl + :lf .<br/>互動式驗證修復後的值"]
 
-    D --> D1["加上 -L 查看建置日誌\nnixos-rebuild switch -L"]
+    D --> D1["加上 -L 查看建置日誌<br/>nixos-rebuild switch -L"]
     D1 --> D2{"能看到錯誤的建置輸出？"}
-    D2 -- "是" --> D3["根據編譯錯誤修改配置\n或回報 bug 給 nixpkgs"]
-    D2 -- "否，日誌太多" --> D4["nix log /nix/store/xxx.drv\n查看特定 derivation 的完整日誌"]
+    D2 -- "是" --> D3["根據編譯錯誤修改配置<br/>或回報 bug 給 nixpkgs"]
+    D2 -- "否，日誌太多" --> D4["nix log /nix/store/xxx.drv<br/>查看特定 derivation 的完整日誌"]
 
-    E --> E1["systemctl --failed\n找出失敗的 unit"]
-    E1 --> E2["journalctl -u <服務名稱> -n 100\n查看服務日誌"]
-    E2 --> E3["對照錯誤關鍵字表\n（Permission denied / Address in use / 等）"]
-    E3 --> E4["修改對應的 services.<服務> 配置\n執行 nixos-rebuild switch"]
+    E --> E1["systemctl --failed<br/>找出失敗的 unit"]
+    E1 --> E2["journalctl -u <服務名稱> -n 100<br/>查看服務日誌"]
+    E2 --> E3["對照錯誤關鍵字表<br/>（Permission denied / Address in use / 等）"]
+    E3 --> E4["修改對應的 services.<服務> 配置<br/>執行 nixos-rebuild switch"]
 
     C3 --> F["修復問題，重新 switch"]
     D3 --> F
@@ -1112,7 +1112,7 @@ flowchart TD
 
     F --> G{"問題解決了嗎？"}
     G -- "是" --> H["記錄解法，避免下次重蹈覆轍"]
-    G -- "否" --> I["在 NixOS Discourse / Matrix 提問\n附上 --show-trace 完整輸出"]
+    G -- "否" --> I["在 NixOS Discourse / Matrix 提問<br/>附上 --show-trace 完整輸出"]
 
     style H fill:#51cf66,color:#fff
     style I fill:#74c0fc,color:#333

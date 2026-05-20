@@ -151,13 +151,13 @@ NixOS 的使用者設定中，密碼通常用這種方式設定：
 
 ```mermaid
 flowchart TD
-    A["configuration.nix\n（包含 DB_PASSWORD=secret123）"]
+    A["configuration.nix<br/>（包含 DB_PASSWORD=secret123）"]
     B["nixos-rebuild switch"]
-    C["Nix Evaluation\n（計算系統 Closure）"]
-    D["/nix/store/abc123-system-config/\n（世界可讀）"]
-    E["alice（一般使用者）\ngrep -r DB_PASSWORD /nix/store/"]
-    F["bob（惡意使用者）\ncat /nix/store/abc123.../config"]
-    G["CI runner\n（有 /nix/store 存取權）"]
+    C["Nix Evaluation<br/>（計算系統 Closure）"]
+    D["/nix/store/abc123-system-config/<br/>（世界可讀）"]
+    E["alice（一般使用者）<br/>grep -r DB_PASSWORD /nix/store/"]
+    F["bob（惡意使用者）<br/>cat /nix/store/abc123.../config"]
+    G["CI runner<br/>（有 /nix/store 存取權）"]
 
     A --> B --> C --> D
     D --> E
@@ -1044,28 +1044,28 @@ CI 的職責                    部署的職責
 ```mermaid
 flowchart LR
     subgraph Dev["開發者環境"]
-        A["alice 的筆電\n持有 age 私鑰"]
+        A["alice 的筆電<br/>持有 age 私鑰"]
     end
 
     subgraph Git["Git Repository"]
-        B["flake.nix\nconfiguration.nix"]
-        C["secrets/*.age\n（加密的機密）"]
+        B["flake.nix<br/>configuration.nix"]
+        C["secrets/*.age<br/>（加密的機密）"]
     end
 
     subgraph CI["CI 環境（GitHub Actions）"]
-        D["nix build\n只建置，不解密"]
-        E["推送到 Cachix\n（binary cache）"]
+        D["nix build<br/>只建置，不解密"]
+        E["推送到 Cachix<br/>（binary cache）"]
     end
 
     subgraph Prod["生產環境"]
-        F["nixos-server\n持有 SSH host key"]
-        G["/run/agenix/\n（解密後的機密）"]
+        F["nixos-server<br/>持有 SSH host key"]
+        G["/run/agenix/<br/>（解密後的機密）"]
     end
 
     A -->|"agenix -e 加密"| C
     B --> CI
     C --> CI
-    D -->|"只讀取 .age 檔案路徑\n不解密"| D
+    D -->|"只讀取 .age 檔案路徑<br/>不解密"| D
     D --> E
     E -->|"nixos-rebuild switch"| F
     F -->|"用 SSH host key 解密"| G

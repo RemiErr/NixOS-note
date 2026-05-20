@@ -71,10 +71,10 @@ Home Manager 能管理的範圍非常廣：
 graph TD
   subgraph system["NixOS 系統層（root 管理）"]
     S1["configuration.nix"]
-    S2["系統套件\nenvironment.systemPackages"]
-    S3["系統服務\nservices.openssh.enable"]
-    S4["使用者帳號\nusers.users.alice"]
-    S5["核心設定\nboot、networking、hardware"]
+    S2["系統套件<br/>environment.systemPackages"]
+    S3["系統服務<br/>services.openssh.enable"]
+    S4["使用者帳號<br/>users.users.alice"]
+    S5["核心設定<br/>boot、networking、hardware"]
     S1 --> S2
     S1 --> S3
     S1 --> S4
@@ -83,11 +83,11 @@ graph TD
 
   subgraph user["Home Manager 使用者層（alice 管理）"]
     H1["home.nix"]
-    H2["使用者套件\nhome.packages"]
-    H3["程式配置\nprograms.git\nprograms.neovim"]
-    H4["Dotfiles\nhome.file"]
-    H5["使用者服務\nsystemd.user.services"]
-    H6["桌面個人化\ngtk.theme\nwayland.windowManager"]
+    H2["使用者套件<br/>home.packages"]
+    H3["程式配置<br/>programs.git<br/>programs.neovim"]
+    H4["Dotfiles<br/>home.file"]
+    H5["使用者服務<br/>systemd.user.services"]
+    H6["桌面個人化<br/>gtk.theme<br/>wayland.windowManager"]
     H1 --> H2
     H1 --> H3
     H1 --> H4
@@ -194,15 +194,15 @@ home-manager switch --flake .#alice
 flowchart LR
   subgraph module["NixOS Module 模式"]
     direction TB
-    A1["編輯 flake.nix\n或 home.nix"] --> B1["sudo nixos-rebuild switch\n--flake .#nixos"]
+    A1["編輯 flake.nix<br/>或 home.nix"] --> B1["sudo nixos-rebuild switch<br/>--flake .#nixos"]
     B1 --> C1["系統層更新"]
-    B1 --> D1["使用者層更新\n（home.nix 套用）"]
+    B1 --> D1["使用者層更新<br/>（home.nix 套用）"]
   end
 
   subgraph standalone["Standalone 模式"]
     direction TB
-    A2["編輯 home.nix"] --> B2["home-manager switch\n--flake .#alice"]
-    B2 --> C2["使用者層更新\n（系統層不受影響）"]
+    A2["編輯 home.nix"] --> B2["home-manager switch<br/>--flake .#alice"]
+    B2 --> C2["使用者層更新<br/>（系統層不受影響）"]
   end
 ```
 
@@ -1093,13 +1093,13 @@ Home Manager 管理使用者層（`~/`、dotfiles、個人套件、使用者服�
 
 ```mermaid
 flowchart TD
-  START["你的情境"] --> Q{"是 NixOS？\n自己管的機器？"}
-  Q -->|"是"| MODULE["NixOS Module 模式\n推薦初學者"]
+  START["你的情境"] --> Q{"是 NixOS？<br/>自己管的機器？"}
+  Q -->|"是"| MODULE["NixOS Module 模式<br/>推薦初學者"]
   Q -->|"否（macOS / 多使用者伺服器）"| STANDALONE["Standalone 模式"]
 
-  MODULE --> M1["flake.nix 加入\nhome-manager input"]
-  MODULE --> M2["inputs.nixpkgs.follows\n避免版本衝突"]
-  MODULE --> M3["一個指令同時更新\nsudo nixos-rebuild switch"]
+  MODULE --> M1["flake.nix 加入<br/>home-manager input"]
+  MODULE --> M2["inputs.nixpkgs.follows<br/>避免版本衝突"]
+  MODULE --> M3["一個指令同時更新<br/>sudo nixos-rebuild switch"]
 
   STANDALONE --> S1["獨立 homeConfigurations"]
   STANDALONE --> S2["home-manager switch"]
@@ -1124,13 +1124,13 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  P1["用 programs.*\n管理有模組的工具\ngit、zsh、neovim"]
-  P2["用 home.file\n管理沒有模組的工具\n任意 dotfiles"]
-  P3["用 home.packages\n安裝使用者專用套件\n不影響系統"]
-  P4["用 systemd.user\n管理使用者服務\n不需要 root"]
-  P5["inputs.nixpkgs.follows\n確保版本統一"]
+  P1["用 programs.*<br/>管理有模組的工具<br/>git、zsh、neovim"]
+  P2["用 home.file<br/>管理沒有模組的工具<br/>任意 dotfiles"]
+  P3["用 home.packages<br/>安裝使用者專用套件<br/>不影響系統"]
+  P4["用 systemd.user<br/>管理使用者服務<br/>不需要 root"]
+  P5["inputs.nixpkgs.follows<br/>確保版本統一"]
 
-  P1 --> GOOD["可維護\n可重現\n的個人環境"]
+  P1 --> GOOD["可維護<br/>可重現<br/>的個人環境"]
   P2 --> GOOD
   P3 --> GOOD
   P4 --> GOOD
