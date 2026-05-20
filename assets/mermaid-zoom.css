@@ -6,6 +6,7 @@ div.mermaid {
   cursor: zoom-in;
   transition: filter 0.15s ease-out;
 }
+
 pre.mermaid:hover,
 div.mermaid:hover {
   filter: brightness(0.97);
@@ -14,7 +15,7 @@ div.mermaid:hover {
 /* SVG 也繼承可點擊游標 */
 pre.mermaid svg,
 div.mermaid svg,
-.mermaid > svg {
+.mermaid>svg {
   cursor: zoom-in;
 }
 
@@ -25,6 +26,7 @@ div.mermaid svg,
   inset: 0;
   z-index: 9999;
 }
+
 #mermaid-zoom-modal.mz-open {
   display: block;
 }
@@ -45,6 +47,7 @@ div.mermaid svg,
   justify-content: center;
   user-select: none;
 }
+
 #mermaid-zoom-modal .mz-stage.mz-grabbing {
   cursor: grabbing;
 }
@@ -60,7 +63,7 @@ div.mermaid svg,
   width: auto !important;
   height: 85vh;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
-  background: white;
+  background: #e1e1dbbd;
   border-radius: 4px;
   padding: 16px;
   display: block;
@@ -92,9 +95,11 @@ div.mermaid svg,
   justify-content: center;
   transition: background 0.1s, transform 0.05s;
 }
+
 #mermaid-zoom-modal .mz-btn:hover {
   background: white;
 }
+
 #mermaid-zoom-modal .mz-btn:active {
   transform: scale(0.95);
 }
@@ -116,6 +121,6 @@ div.mermaid svg,
 /* 深色主題下，modal 內的 SVG 維持淺色底（圖原本以淺底設計） */
 .navy #mermaid-zoom-modal .mz-content svg,
 .coal #mermaid-zoom-modal .mz-content svg,
-.ayu  #mermaid-zoom-modal .mz-content svg {
-  background: #fafafa;
+.ayu #mermaid-zoom-modal .mz-content svg {
+  background: #e1e1dbbd;
 }
