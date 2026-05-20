@@ -921,3 +921,39 @@ my.devTools.languages = {
 - `assertions` 的設計與使用
 
 下一步是 Lab 4，將介紹如何使用 **Flakes** 改造整個 `/etc/nixos` 目錄結構，讓配置具備版本鎖定（lock file）與更嚴格的可重現性保證。
+
+---
+
+## 自動驗證
+
+本目錄附有標準答案與驗證腳本。
+
+### 標準答案：`solutions/`
+
+- `dev-tools.nix` — Step 4 + 7 + 8 全部完成的完整模組（含 assertions 與 gitUserName）
+- `configuration.nix` — 引入 dev-tools 模組的桌面工作站範例
+
+對照差異：
+
+```bash
+diff /etc/nixos/modules/dev-tools.nix solutions/dev-tools.nix
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-03-modularization
+bash verify.sh
+```
+
+腳本會檢查：
+
+- `modules/dev-tools.nix` 已建立且包含 `options.my.devTools`
+- 使用 `mkEnableOption` 與 `types.enum`
+- `configuration.nix` 已 import 並 `my.devTools.enable = true`
+- `git`、`ripgrep` 等套件已實際安裝
+- `nixos-option my.devTools.enable` 回傳 `true`
+- 模組包含 `assertions`
+- Step 7 的 `gitUserName`（選用）已生效
+
+若失敗會列出對應 Step 與檢查指令，回頭對照 `solutions/dev-tools.nix` 即可。

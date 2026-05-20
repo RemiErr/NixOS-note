@@ -694,3 +694,72 @@ sudo vim /etc/nixos/profiles/desktop-full.nix
 **完成本 Lab，你已經建立了第一個模組化的 NixOS 配置。**
 
 下一步：前往 Lab 3，學習使用 Flakes 管理系統配置，進一步提升可複製性（Reproducibility）與可攜性（Portability）。
+
+---
+
+## 自動驗證
+
+本目錄附有 starter / solutions / 驗證腳本，協助你確認模組化拆分的成果。
+
+### 起始檔案：`starter/configuration.nix`
+
+模擬 Lab 1 完成後的「單一大檔」狀態，作為本 Lab 的起點。若你的 `configuration.nix` 已偏離預期，可重置：
+
+```bash
+sudo cp starter/configuration.nix /etc/nixos/configuration.nix
+sudo nixos-rebuild dry-run
+```
+
+### 標準答案：`solutions/`
+
+```
+solutions/
+├── configuration.nix    # Step 6 重構後的入口檔
+├── users.nix            # Step 2
+├── packages.nix         # Step 3
+├── services.nix         # Step 4
+├── desktop.nix          # Step 5
+└── security.nix         # Step 8（選用）
+```
+
+若拆分後行為異常，逐檔 diff 對照：
+
+```bash
+for f in configuration users packages services desktop security; do
+  echo "=== $f.nix ==="
+  diff /etc/nixos/$f.nix solutions/$f.nix
+done
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-02-basic-configuration
+bash verify.sh
+```
+
+腳本會檢查：
+
+- 4 個功能模組（users / packages / services / desktop）已建立
+- `configuration.nix` 已重構為入口檔（不再內含 `users.users.alice` 等細節）
+- `nixos-rebuild dry-run` 成功
+- 拆分後的套件、服務、群組仍正常生效
+- 若已完成 Step 8，會額外驗證 `security.nix` 與防火牆
+
+**預期輸出（全部通過）：**
+
+```
+=== Lab 2 驗證 ===
+
+Step 2–5：四個功能模組已建立
+  [PASS] users.nix 存在
+  [PASS] packages.nix 存在
+  ...
+=== 結果 ===
+通過：17
+失敗：0
+
+Lab 2 已通過所有驗證。可以前往 Lab 3。
+```
+
+若有失敗項目，腳本會提示用 `diff` 對照 `solutions/` 找出差異。

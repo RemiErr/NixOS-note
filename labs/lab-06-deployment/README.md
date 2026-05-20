@@ -1327,3 +1327,48 @@ sudo nixos-rebuild switch \
 - 常見的 Nix 建置錯誤與解決方法
 
 對應章節：第 26–28 章（除錯與維護）。
+
+---
+
+## 自動驗證
+
+本目錄附有完整的 Flakes 多主機架構標準答案與驗證腳本。
+
+### 標準答案：`solutions/`
+
+```
+solutions/
+├── flake.nix                       # laptop + server + home-manager 整合
+├── hosts/
+│   ├── laptop/{default,hardware}.nix
+│   └── server/default.nix
+├── modules/common/{default,nix}.nix
+├── profiles/{desktop,server}.nix
+└── home/alice/default.nix
+```
+
+> `hosts/laptop/hardware.nix` 是範本佔位，實際使用時請替換為 `nixos-generate-config` 在你的機器上產生的內容。
+
+對照差異（在你的 flake 根目錄執行）：
+
+```bash
+diff -r /etc/nixos /path/to/NixOS_Book/labs/lab-06-deployment/solutions \
+  --exclude='flake.lock' --exclude='hardware-configuration.nix' --exclude='.git'
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-06-deployment
+bash verify.sh                          # 預設檢查 /etc/nixos
+bash verify.sh /path/to/your/flake/root  # 或指定 flake 根目錄
+```
+
+腳本會檢查：
+
+- Flakes 子指令可用
+- 目錄已 `git init`，`flake.nix` 與 `flake.lock` 都被 git 追蹤
+- `hosts/`、`modules/common/`、`profiles/`、`home/alice/` 目錄結構完整
+- `nix flake show` 列出 `laptop` 與 `server` 兩個 nixosConfigurations
+- `server` 配置可用 `--dry-run` 通過建構檢查
+- 當前主機為 `laptop` 時，額外檢查 Home Manager 套件（bat / eza / fd）與 git 設定

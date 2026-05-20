@@ -37,6 +37,8 @@
           ];
 
           buildPhase = ''
+            # 產生 mermaid.min.js 與 mermaid-init.js，否則瀏覽器無法渲染圖
+            mdbook-mermaid install .
             mdbook build
           '';
 

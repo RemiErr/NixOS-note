@@ -42,6 +42,13 @@ jobs:
             | tar xz
           sudo mv mdbook-mermaid /usr/local/bin/
 
+      - name: 產生 mermaid.min.js 與 mermaid-init.js
+        # mdbook-mermaid install 會把瀏覽器端的 mermaid.js 與
+        # 初始化腳本寫到 book root，供 [output.html] additional-js 引用。
+        # 沒有這步，``mermaid 區塊只會被轉成 <pre class="mermaid">，
+        # 但瀏覽器沒載入 mermaid.js，圖無法渲染。
+        run: mdbook-mermaid install .
+
       - name: 建構書籍
         run: mdbook build
 

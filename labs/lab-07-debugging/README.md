@@ -1399,3 +1399,45 @@ sudo nixos-rebuild dry-run --flake ~/lab07-debugging#nixos --show-trace 2>&1 | h
 - **第 32 章**：NixOS 團隊協作架構——monorepo vs multi-repo、Branch/PR 流程、Code Review、Module Ownership、Onboarding 與 Breaking Change 管理
 
 第八篇的章節將把你在 Lab 6 學到的多主機 Flakes 架構，擴展到真實工程團隊的協作場景。
+
+---
+
+## 自動驗證
+
+本目錄附有四個任務的標準答案與驗證腳本。
+
+### 標準答案：`solutions/`
+
+```
+solutions/
+├── fixed-config-1.nix       # 任務一：修復 hostNamme + permitRootLogin
+├── module-a-fixed.nix       # 任務二：重構後的 module-a（用 mkIf 取代衝突）
+├── conflict-resolved.nix    # 任務二：上層配置統一決定 enable
+├── fixed-service-v2.nix     # 任務三：RuntimeDirectory 修復權限問題
+└── flake.nix                # 載入修復配置的 flake（切換 modules 即可換任務）
+```
+
+對照差異（在 `~/lab07-debugging` 內）：
+
+```bash
+diff ~/lab07-debugging/fixed-config-1.nix solutions/fixed-config-1.nix
+diff ~/lab07-debugging/fixed-service-v2.nix solutions/fixed-service-v2.nix
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-07-debugging
+bash verify.sh                          # 預設檢查 ~/lab07-debugging
+bash verify.sh /custom/path              # 或自訂工作目錄
+```
+
+腳本會檢查：
+
+- 工作目錄存在、git repo 已初始化、`flake.nix` 存在
+- **任務一**：`fixed-config-1.nix` 使用正確的 `hostName` 與 `settings.PermitRootLogin`
+- **任務二**：`dry-run` 不再出現 `conflicting definition values`
+- **任務三**：`fixed-webapp-v2` 服務 active、監聽 8080、HTTP 回應 200
+- **任務四**：`nix` 與 `nix flake show` 可用
+
+每個任務若尚未進行，相關檢查會顯示 `[SKIP]` 而非失敗。

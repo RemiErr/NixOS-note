@@ -1275,3 +1275,49 @@ sudo -u myapp redis-cli -h 127.0.0.1 ping
 **下一步：Lab 6 — Flakes 與多主機管理**
 
 在 Lab 6 中，我們將把本 Lab 的伺服器配置遷移到 Flakes 架構，並學習如何用同一份程式碼庫管理多台不同用途的 NixOS 主機（筆記型電腦、工作站、伺服器），以及使用 `deploy-rs` 實現遠端部署自動化。
+
+---
+
+## 自動驗證
+
+本目錄附有四個服務模組的標準答案與驗證腳本。
+
+### 標準答案：`solutions/`
+
+```
+solutions/
+├── configuration.nix    # 伺服器入口檔
+└── modules/
+    ├── ssh.nix          # 強化 SSH（無密碼登入、無 root）
+    ├── postgresql.nix   # PG 16 + 宣告式建庫
+    ├── webapp.nix       # 自訂 Python systemd 服務
+    └── nginx.nix        # 反向代理到 myapp:8080
+```
+
+對照差異：
+
+```bash
+for f in configuration; do diff /etc/nixos/$f.nix solutions/$f.nix; done
+for f in ssh postgresql webapp nginx; do
+  echo "=== modules/$f.nix ==="
+  diff /etc/nixos/modules/$f.nix solutions/modules/$f.nix
+done
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-05-home-manager
+bash verify.sh
+```
+
+腳本會檢查：
+
+- `modules/` 目錄與四個服務模組存在
+- `configuration.nix` 引入這四個模組
+- `sshd` / `postgresql` / `myapp` / `nginx` 四個服務皆為 `active`
+- PostgreSQL 的 `myapp` 資料庫已建立
+- `myapp` 監聽 8080，HTTP 回應為「Hello from NixOS」
+- Nginx 從外部 80 port 可正確反向代理到 myapp
+- 防火牆只開放 22 與 80（PostgreSQL 不對外）
+- SSH 已禁止密碼登入與 root 登入

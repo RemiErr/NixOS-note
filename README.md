@@ -8,7 +8,7 @@
 # 進入 Nix 開發環境（需安裝 Nix + Flakes）
 nix develop
 
-# 本機即時預覽
+# 本機即時預覽（首次執行會自動產生 mermaid.min.js / mermaid-init.js）
 make serve
 
 # 建構 HTML
@@ -17,6 +17,12 @@ make build
 # Markdown 格式檢查
 make lint
 ```
+
+> **Mermaid 圖表的瀏覽器資源**
+>
+> `mermaid.min.js` 與 `mermaid-init.js` 由 `mdbook-mermaid install .` 產生，
+> 已加入 `.gitignore`，不會提交到 repo。`make serve` / `make build` 與 CI 都會
+> 自動處理。若手動執行 `mdbook serve`，請先跑一次 `mdbook-mermaid install .`。
 
 ## 書籍結構
 

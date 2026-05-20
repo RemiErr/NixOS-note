@@ -15,3 +15,4 @@ command = "mdbook-mermaid"
 default-theme = "rust"
 preferred-dark-theme = "ayu"
 smart-punctuation = false
+additional-js = ["mermaid.min.js", "mermaid-init.js"]

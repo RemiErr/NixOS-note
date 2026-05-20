@@ -1362,3 +1362,50 @@ sudo fail2ban-client status sshd
 - 了解「系統套件」與「使用者套件」的邊界在哪裡
 
 學完 Lab 5，你的 NixOS 配置將覆蓋從系統核心到使用者桌面偏好的完整堆疊，真正實現「整台電腦的狀態完全由 Git 控制」的目標。
+
+---
+
+## 自動驗證
+
+本目錄附有六個模組的標準答案與驗證腳本。
+
+### 標準答案：`solutions/`
+
+```
+solutions/
+├── configuration.nix    # 純入口檔
+├── hardware.nix         # GPU / 音效
+├── boot.nix             # systemd-boot / 核心
+├── networking.nix       # NetworkManager / 防火牆 / SSH
+├── users.nix            # alice + hashedPassword + SSH keys
+└── packages.nix         # 套件 / Zsh / Starship / 字型
+```
+
+> 注意：`users.nix` 的 `hashedPassword` 與 SSH 公鑰是佔位符，必須替換為你自己用 `mkpasswd` 與 `ssh-keygen` 產生的值。
+
+逐檔對照：
+
+```bash
+for f in hardware boot networking users packages configuration; do
+  echo "=== $f.nix ==="
+  diff /etc/nixos/$f.nix solutions/$f.nix
+done
+```
+
+### 驗證腳本：`verify.sh`
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-04-flakes
+bash verify.sh
+```
+
+腳本會檢查：
+
+- 六個模組檔案皆存在
+- `configuration.nix` 為純入口檔（只做 imports）
+- systemd-boot 與 EFI 設定正確
+- 防火牆開放 22、OpenSSH 啟用且禁止 root 登入
+- `alice` 屬於 `wheel` / `networkmanager` / `audio` / `video`
+- 套件（git、ripgrep、zsh、vscode）已安裝
+- `allowUnfree = true` 已設定
+- 世代數 ≥ 2（代表至少 `nixos-rebuild switch` 過一次）

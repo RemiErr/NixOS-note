@@ -629,3 +629,54 @@ sudo nixos-rebuild switch --rollback
 在 systemd-boot 選單出現時，按下鍵盤方向鍵，瀏覽可選的 generation 清單。
 
 選擇一個非當前的 generation 開機，進入系統後用 `nixos-rebuild list-generations` 確認目前所在的世代。
+
+---
+
+## 自動驗證
+
+本目錄附有兩個輔助檔，可用來自動檢查你的 Lab 成果。
+
+### 標準答案：`solutions/configuration.nix`
+
+Step 6 完成後的 `configuration.nix` 參考實作。若你的修改沒按預期運作，可以用 diff 對照：
+
+```bash
+diff /etc/nixos/configuration.nix solutions/configuration.nix
+```
+
+兩者應該只在註解與空白行有差異，實際設定內容相同。
+
+### 驗證腳本：`verify.sh`
+
+在 NixOS VM 內，把整本書 clone 下來後執行：
+
+```bash
+cd /path/to/NixOS_Book/labs/lab-01-installation
+bash verify.sh
+```
+
+腳本會檢查：
+
+- `configuration.nix` 與 `hardware-configuration.nix` 存在
+- `system.stateVersion = "25.05"`
+- `htop`、`tree` 已加入 `environment.systemPackages` 且實際可執行
+- 世代數 ≥ 2（代表 `nixos-rebuild switch` 至少成功跑過一次）
+- 使用者帳號 `alice` 存在且屬於 `wheel` 群組
+
+**預期輸出（全部通過）：**
+
+```
+=== Lab 1 驗證 ===
+
+Step 5：configuration.nix 結構檢查
+  [PASS] configuration.nix 存在
+  [PASS] hardware-configuration.nix 存在
+  ...
+=== 結果 ===
+通過：10
+失敗：0
+
+Lab 1 已通過所有驗證。可以前往 Lab 2。
+```
+
+若有任何項目顯示 `[FAIL]`，腳本會列出失敗的指令與對應 Step，回到該 Step 確認即可。
